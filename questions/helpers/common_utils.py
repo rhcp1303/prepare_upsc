@@ -7,7 +7,7 @@ import google.generativeai as genai
 from django.core.files.storage import default_storage
 from PIL import Image
 import os
-
+import pytesseract
 
 BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/UPSCPrep/upsc_prelims_through_pyq"
 model = genai.GenerativeModel("gemini-1.5-flash")
