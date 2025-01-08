@@ -61,7 +61,7 @@ def extract_text_from_scanned_pdf_using_gemini(pdf_path):
             all_text = ""
             for page_num, page in enumerate(pdf.pages):
                 image_path = f"temp_page_{page_num}.png"
-                page.to_image().save(image_path)
+                page.to_image(resolution=300).save(image_path)
                 img_url = BASE_URL_PREFIX + default_storage.url(image_path)
                 img = Image.open(img_url)
                 response = model.generate_content(["extract text from this image without any additional context or headers", img])
