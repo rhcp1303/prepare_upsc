@@ -3,11 +3,11 @@ import re
 from PIL import Image
 import pdfplumber
 from django.core.files.storage import default_storage
-from googletrans import Translator
 import google.generativeai as genai
+from langdetect import detect
 
 
-BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/UPSCPrep/upsc_prelims_through_pyq"
+BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/PrepareUPSC/prepare_upsc"
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
 
@@ -41,7 +41,6 @@ def extract_text_from_pdf(pdf_file_path):
 
 def extract_text_from_scanned_pdf(pdf_file_path):
 
-    translator = Translator()
     try:
         with pdfplumber.open(pdf_file_path) as pdf:
             all_text = ""
@@ -54,13 +53,14 @@ def extract_text_from_scanned_pdf(pdf_file_path):
                 text = response.text
                 os.remove(f"temp_page_{page_num}.png")
                 try:
-                    detected_lang = translator.detect(text).lang
+                    detected_lang =  detect(text)
+                    if detected_lang == "hi":
+                        continue
+                    if text.find("(a)") != -1:
+                        all_text += text + "\n"
                 except Exception as e:
                     print("error here")
-                if detected_lang == "hi":
-                    continue
-                if text.find("(a)")!=-1:
-                    all_text += text + "\n"
+
             return all_text
     except Exception as e:
         print(f"Error processing PDF: {e}")

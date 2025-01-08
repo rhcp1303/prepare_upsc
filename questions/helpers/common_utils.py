@@ -9,6 +9,7 @@ from PIL import Image
 import os
 import pytesseract
 
+
 BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/PrepareUPSC/prepare_upsc"
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
