@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 from PIL import Image
 import os
 import pytesseract
+from langdetect import detect
 
 
 BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/PrepareUPSC/prepare_upsc"
@@ -79,8 +80,11 @@ def extract_text_from_scanned_pdf(pdf_path):
     for page_num, page in enumerate(pdf.pages):
       image = page.to_image()
       image.save(f"temp_page_{page_num}.png")
-      extracted_text = pytesseract.image_to_string(f"temp_page_{page_num}.png")
-      print(extracted_text+" \n\n")
+      extracted_text = pytesseract.image_to_string(f"temp_page_{page_num}.png",lang='hin+eng')
+      lang = detect(extracted_text)
+      if lang == 'hi':
+          continue
+      print(extracted_text)
       text += extracted_text + "\n"
       os.remove(f"temp_page_{page_num}.png")
   return text

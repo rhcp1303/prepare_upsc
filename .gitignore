@@ -8,3 +8,4 @@ static/
 .DS_Store
 *~
 temp/
+*.png
