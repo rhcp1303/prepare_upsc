@@ -78,7 +78,7 @@ def extract_text_from_scanned_pdf(pdf_path):
   with pdfplumber.open(pdf_path) as pdf:
     text = ""
     for page_num, page in enumerate(pdf.pages):
-      image = page.to_image()
+      image = page.to_image(resolution=300)
       image.save(f"temp_page_{page_num}.png")
       extracted_text = pytesseract.image_to_string(f"temp_page_{page_num}.png",lang='hin+eng')
       lang = detect(extracted_text)
