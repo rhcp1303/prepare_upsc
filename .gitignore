@@ -1,0 +1,10 @@
+.upscenv/
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+static/
+.idea/
+.DS_Store
+*~
+temp/
