@@ -35,7 +35,7 @@ def extract_text_from_pdf(pdf_file_path):
                     extracted_text += page_text
     except FileNotFoundError:
         print("File not found!")
-    except Exception as e:  # Catch all other exceptions
+    except Exception as e:
         print(f"An unexpected error occurred: {e}")
     return extracted_text
 
@@ -67,11 +67,11 @@ def extract_text_from_scanned_pdf(pdf_file_path):
         return ""
 
 def extract_questions_from_text(extracted_text,extract_option):
-    regex_pattern_for_question = r"\d+\.\s*(.*?)(?=\s+\(a\)\s+|$)"
-    regex_pattern_for_answers = [r"\(a\)\s*(.*?)(?=\s*\(b\)\s+|$)",
-                                 r"\(b\)\s*(.*?)(?=\s*\(c\)\s+|$)",
-                                 r"\(c\)\s*(.*?)(?=\s*\(d\)\s+|$)",
-                                 r"\(d\)\s*(.*?)(?=\s*d+\.\s*|$)"]
+    regex_pattern_for_question = r"\d+\.\s*(.*?)(?=\n\(a\)\s*|$)"
+    regex_pattern_for_answers = [r"\n\(a\)\s*(.*?)(?=\s*\n|$)",
+                                 r"\n\(b\)\s*(.*?)(?=\s*\n|$)",
+                                 r"\n\(c\)\s*(.*?)(?=\s*\n|$)",
+                                 r"\n\(d\)\s*(.*?)(?=\s*\n|$)"]
 
     question_list = re.findall(regex_pattern_for_question, extracted_text, re.DOTALL)
     print("------------------\n\n")

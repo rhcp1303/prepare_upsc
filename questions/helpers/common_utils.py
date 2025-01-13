@@ -1,6 +1,5 @@
 import json
 import time
-import numpy as np
 import pdfplumber
 import csv
 import google.generativeai as genai
@@ -9,43 +8,32 @@ from PIL import Image
 import os
 import pytesseract
 from langdetect import detect
-
+import typing_extensions as typing
+from concurrent.futures import ProcessPoolExecutor
 
 BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/PrepareUPSC/prepare_upsc"
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
 
-def write_to_json(data,output_path):
+
+def write_to_json(data, output_path):
     with open(output_path, 'w') as outfile:
         json.dump(data, outfile, indent=4)
 
 
 def csv_to_json(csv_file, json_file):
-  data = []
-  with open(csv_file, 'r') as csvfile:
-    csv_reader = csv.reader(csvfile)
-    for row in csv_reader:
-        if(row):
-            data.append({
-                "question_text": row[0],
-                "subject": row[1]
-            })
+    data = []
+    with open(csv_file, 'r') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        for row in csv_reader:
+            if (row):
+                data.append({
+                    "question_text": row[0],
+                    "subject": row[1]
+                })
 
-  with open(json_file, 'w') as jsonfile:
-    json.dump(data, jsonfile, indent=4)
-
-
-def merge_embeddings(d1, centroid1, d2, method='concat'):
-    if d1 != len(d2):
-        raise ValueError("Embeddings must have the same dimensionality for merging.")
-    if method == 'concat':
-        return np.concatenate((centroid1, d2))
-    elif method == 'average':
-        return (centroid1 + d2) / 2
-    elif method == 'sum':
-        return centroid1 + d2
-    else:
-        raise ValueError(f"Invalid merge method: {method}")
+    with open(json_file, 'w') as jsonfile:
+        json.dump(data, jsonfile, indent=4)
 
 
 def extract_text_from_pdf(pdf_path):
@@ -54,6 +42,7 @@ def extract_text_from_pdf(pdf_path):
         for page in pdf.pages:
             text += page.extract_text()
     return text
+
 
 def extract_text_from_scanned_pdf_using_gemini(pdf_path):
     try:
@@ -64,7 +53,8 @@ def extract_text_from_scanned_pdf_using_gemini(pdf_path):
                 page.to_image(resolution=300).save(image_path)
                 img_url = BASE_URL_PREFIX + default_storage.url(image_path)
                 img = Image.open(img_url)
-                response = model.generate_content(["extract text from this image without any additional context or headers", img])
+                response = model.generate_content(
+                    ["extract text from this image without any additional context or headers", img])
                 time.sleep(5)
                 text = response.text
                 os.remove(f"temp_page_{page_num}.png")
@@ -74,17 +64,62 @@ def extract_text_from_scanned_pdf_using_gemini(pdf_path):
         print(f"Error processing PDF: {e}")
         return ""
 
+
+def extract_text_from_page(page_number, pdf_path):
+    with pdfplumber.open(pdf_path) as pdf:
+        page = pdf.pages[page_number]
+        crop_box = (0, 0, page.width / 2, page.height)
+        left_half_page = page.within_bbox(crop_box)
+        left_half_image = left_half_page.to_image(resolution=300)
+        left_filename = f"temp_left_half_page_{page.page_number}.jpg"
+        left_half_image.save(left_filename)
+        left_extracted_text = pytesseract.image_to_string(left_filename, lang='eng')
+        print(left_extracted_text)
+        crop_box = (page.width / 2, 0, page.width, page.height)
+        right_half_page = page.within_bbox(crop_box)
+        right_half_image = right_half_page.to_image(resolution=300)
+        right_filename = f"temp_right_half_page_{page.page_number}.jpg"
+        right_half_image.save(right_filename)
+        right_extracted_text = pytesseract.image_to_string(right_filename, lang='eng')
+        print(right_extracted_text)
+        os.remove(left_filename)
+        os.remove(right_filename)
+        return left_extracted_text+"\n"+right_extracted_text
+
 def extract_text_from_scanned_pdf(pdf_path):
-  with pdfplumber.open(pdf_path) as pdf:
-    text = ""
-    for page_num, page in enumerate(pdf.pages):
-      image = page.to_image(resolution=300)
-      image.save(f"temp_page_{page_num}.png")
-      extracted_text = pytesseract.image_to_string(f"temp_page_{page_num}.png",lang='hin+eng')
-      lang = detect(extracted_text)
-      if lang == 'hi':
-          continue
-      print(extracted_text)
-      text += extracted_text + "\n"
-      os.remove(f"temp_page_{page_num}.png")
-  return text
+    with ProcessPoolExecutor(max_workers=4) as executor:
+        results = list(executor.map(extract_text_from_page,
+                                    range(len(pdfplumber.open(pdf_path).pages)),
+                                    [pdf_path] * len(pdfplumber.open(pdf_path).pages)))
+    return "\n".join(filter(None, results))
+
+
+def call_gemini_api_to_get_explanation(prompt):
+    class Explanation(typing.TypedDict):
+        correct_option: str
+        explanation: str
+
+    response = model.generate_content(
+        prompt,
+        generation_config=genai.GenerationConfig(
+            response_mime_type="application/json", response_schema=Explanation
+        ),
+    )
+    return response.text
+
+def wrap_text_file(input_file, output_file, line_length=80):
+    with open(input_file, 'r') as f_in, open(output_file, 'w') as f_out:
+        for line in f_in:
+            if line.strip():
+                words = line.split()
+                current_line = ""
+                for word in words:
+                    if len(current_line) + len(word) + 1 <= line_length:
+                        current_line += word + " "
+                    else:
+                        f_out.write(current_line.strip() + "\n")
+                        current_line = word + " "
+                if current_line:
+                    f_out.write(current_line.strip() + "\n")
+            else:
+                f_out.write("\n")
