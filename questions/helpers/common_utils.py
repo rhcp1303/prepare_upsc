@@ -10,8 +10,9 @@ import pytesseract
 from langdetect import detect
 import typing_extensions as typing
 from concurrent.futures import ProcessPoolExecutor
+import logging
+logger = logging.getLogger(__name__)
 
-BASE_URL_PREFIX = "/Users/ankit.anand/PycharmProjects/PrepareUPSC/prepare_upsc"
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
 
@@ -49,15 +50,19 @@ def extract_text_from_scanned_pdf_using_gemini(pdf_path):
         with pdfplumber.open(pdf_path) as pdf:
             all_text = ""
             for page_num, page in enumerate(pdf.pages):
-                image_path = f"temp_page_{page_num}.png"
+                image_path = f"temp/temp_page_{page_num}.png"
                 page.to_image(resolution=300).save(image_path)
-                img_url = BASE_URL_PREFIX + default_storage.url(image_path)
-                img = Image.open(img_url)
-                response = model.generate_content(
-                    ["extract text from this image without any additional context or headers", img])
+                img = Image.open(image_path)
+                try:
+                    response = model.generate_content(
+                        ["extract text from this image without any additional context or headers", img])
+                except Exception as e:
+                    print(f"Error processing page {page_num+1}: {e}")
+                    break
                 time.sleep(5)
                 text = response.text
-                os.remove(f"temp_page_{page_num}.png")
+                print(text)
+                os.remove(image_path)
                 all_text += text + "\n"
             return all_text
     except Exception as e:
@@ -71,20 +76,21 @@ def extract_text_from_page(page_number, pdf_path):
         crop_box = (0, 0, page.width / 2, page.height)
         left_half_page = page.within_bbox(crop_box)
         left_half_image = left_half_page.to_image(resolution=300)
-        left_filename = f"temp_left_half_page_{page.page_number}.jpg"
-        left_half_image.save(left_filename)
-        left_extracted_text = pytesseract.image_to_string(left_filename, lang='eng')
+        left_half_mage_path = f"temp/temp_left_half_page_{page.page_number}.jpg"
+        left_half_image.save(left_half_mage_path)
+        left_extracted_text = pytesseract.image_to_string(left_half_mage_path, lang='eng')
         print(left_extracted_text)
         crop_box = (page.width / 2, 0, page.width, page.height)
         right_half_page = page.within_bbox(crop_box)
         right_half_image = right_half_page.to_image(resolution=300)
-        right_filename = f"temp_right_half_page_{page.page_number}.jpg"
-        right_half_image.save(right_filename)
-        right_extracted_text = pytesseract.image_to_string(right_filename, lang='eng')
+        right_half_mage_path = f"temp/temp_right_half_page_{page.page_number}.jpg"
+        right_half_image.save(right_half_mage_path)
+        right_extracted_text = pytesseract.image_to_string(right_half_mage_path, lang='eng')
         print(right_extracted_text)
-        os.remove(left_filename)
-        os.remove(right_filename)
-        return left_extracted_text+"\n"+right_extracted_text
+        os.remove(left_half_mage_path)
+        os.remove(right_half_mage_path)
+        return left_extracted_text + "\n" + right_extracted_text
+
 
 def extract_text_from_scanned_pdf(pdf_path):
     with ProcessPoolExecutor(max_workers=4) as executor:
@@ -106,6 +112,7 @@ def call_gemini_api_to_get_explanation(prompt):
         ),
     )
     return response.text
+
 
 def wrap_text_file(input_file, output_file, line_length=80):
     with open(input_file, 'r') as f_in, open(output_file, 'w') as f_out:
