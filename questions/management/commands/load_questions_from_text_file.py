@@ -5,12 +5,13 @@ from django.core.management.base import BaseCommand
 import google.generativeai as genai
 from ...helpers import rag_langchain_helper as rag_helper
 from ...helpers import (load_questions_from_pdf_helper as question_loader,
-                        classify_question_into_subjects_helper as classifier,
+                        question_classifier_helper as classifier,
                         common_utils)
 from langchain.prompts import PromptTemplate
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
+
 
 class Command(BaseCommand):
     help = 'Extract questions from a txt file and ingest to database'
@@ -38,9 +39,9 @@ class Command(BaseCommand):
         print("number of option_d extracted: " + str(len(option_d_list)))
         for i in range(len(question_list)):
             regex_pattern_for_correct_option = r"correct_option:.*([a-d]).*(?=\n)"
-            subject = classifier.classify_text(question_list[i])
+            subject = classifier.classify_question(question_list[i])
             question_prompt = question_list[i] + "\n(a) " + option_a_list[i] + "\n(b) " + option_b_list[i] + "\n(c) " + \
-                              option_c_list[i] + "\n(d) "+option_d_list[i]+"\n"
+                              option_c_list[i] + "\n(d) " + option_d_list[i] + "\n"
             try:
                 response = rag_helper.call_langchain(question_prompt)
                 correct_option = re.findall(regex_pattern_for_correct_option, response)[0]

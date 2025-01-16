@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 import google.generativeai as genai
 
 from ...helpers import (load_questions_from_pdf_helper as question_loader,
-                        classify_question_into_subjects_helper as classifier,
+                        question_classifier_helper as classifier,
                         common_utils)
 
 model = genai.GenerativeModel("gemini-1.5-flash")
@@ -30,7 +30,7 @@ class Command(BaseCommand):
         option_d_list = question_dict["list_of_option_d"]
         print("number of questions extracted: "+str(len(question_list)))
         for i in range(len(question_list)):
-            subject = classifier.classify_text(question_list[i])
+            subject = classifier.classify_question(question_list[i])
             explanation = model.generate_content(question_list[i]).text
             time.sleep(5)
             data.append({

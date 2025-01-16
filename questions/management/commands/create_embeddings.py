@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from ...helpers import create_embeddings_helper as helper
+from ...helpers import embeddings_helper as helper
 
 
 class Command(BaseCommand):

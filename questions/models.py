@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Subjects(models.TextChoices):
     MODERN_INDIAN_HISTORY = "MIH", "Modern Indian History"
     HISTORY_ART_AND_CULTURE = "HAC", "History, Art & Culture"
@@ -10,6 +11,7 @@ class Subjects(models.TextChoices):
     ENVIRONMENT = "ENV", "Environment"
     GEOGRAPHY = "GEO", "Geography"
     MISCELLANEOUS = "MISC", "Miscellaneous"
+
 
 class PYQuestion(models.Model):
     subject = models.CharField(max_length=4, choices=Subjects.choices)
@@ -24,6 +26,7 @@ class PYQuestion(models.Model):
     def __str__(self):
         return self.question_text[:50] + "..."
 
+
 class Options(models.Model):
     question = models.ForeignKey(PYQuestion, on_delete=models.CASCADE, related_name='options')
     option_text = models.TextField()
@@ -36,6 +39,7 @@ class Options(models.Model):
 
     def __str__(self):
         return self.option_text
+
 
 class Explanation(models.Model):
     question = models.ForeignKey(PYQuestion, on_delete=models.CASCADE, related_name='explanation')

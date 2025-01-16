@@ -1,17 +1,13 @@
 import json
 import time
 import pdfplumber
-import csv
 import google.generativeai as genai
-from django.core.files.storage import default_storage
 from PIL import Image
 import os
 import pytesseract
 from langdetect import detect
 import typing_extensions as typing
 from concurrent.futures import ProcessPoolExecutor
-import logging
-logger = logging.getLogger(__name__)
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
@@ -22,19 +18,26 @@ def write_to_json(data, output_path):
         json.dump(data, outfile, indent=4)
 
 
-def csv_to_json(csv_file, json_file):
-    data = []
-    with open(csv_file, 'r') as csvfile:
-        csv_reader = csv.reader(csvfile)
-        for row in csv_reader:
-            if (row):
-                data.append({
-                    "question_text": row[0],
-                    "subject": row[1]
-                })
-
-    with open(json_file, 'w') as jsonfile:
-        json.dump(data, jsonfile, indent=4)
+def merge_json_lists(list1_path, list2_path, output_file_path):
+    try:
+        with open(list1_path, 'r') as f1:
+            list1 = json.load(f1)
+        with open(list2_path, 'r') as f2:
+            list2 = json.load(f2)
+        if not isinstance(list1, list):
+            raise ValueError("First file does not contain a JSON list.")
+        if not isinstance(list2, list):
+            raise ValueError("Second file does not contain a JSON list.")
+        merged_list = list1 + list2
+        with open(output_file_path, 'w') as outfile:
+            json.dump(merged_list, outfile, indent=4)
+        print(f"Successfully merged {list1_path} and {list2_path} into {output_file_path}")
+    except FileNotFoundError:
+        print(f"Error: One or both input files not found.")
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {e}")
+    except ValueError as e:
+        print(f"Error: {e}")
 
 
 def extract_text_from_pdf(pdf_path):
@@ -42,6 +45,7 @@ def extract_text_from_pdf(pdf_path):
         text = ""
         for page in pdf.pages:
             text += page.extract_text()
+            print(page.extract_text())
     return text
 
 
@@ -57,7 +61,7 @@ def extract_text_from_scanned_pdf_using_gemini(pdf_path):
                     response = model.generate_content(
                         ["extract text from this image without any additional context or headers", img])
                 except Exception as e:
-                    print(f"Error processing page {page_num+1}: {e}")
+                    print(f"Error processing page {page_num + 1}: {e}")
                     break
                 time.sleep(5)
                 text = response.text
@@ -76,19 +80,19 @@ def extract_text_from_page(page_number, pdf_path):
         crop_box = (0, 0, page.width / 2, page.height)
         left_half_page = page.within_bbox(crop_box)
         left_half_image = left_half_page.to_image(resolution=300)
-        left_half_mage_path = f"temp/temp_left_half_page_{page.page_number}.jpg"
-        left_half_image.save(left_half_mage_path)
-        left_extracted_text = pytesseract.image_to_string(left_half_mage_path, lang='eng')
+        left_half_image_path = f"temp/temp_left_half_page_{page.page_number}.jpg"
+        left_half_image.save(left_half_image_path)
+        left_extracted_text = pytesseract.image_to_string(left_half_image_path, lang='eng')
         print(left_extracted_text)
         crop_box = (page.width / 2, 0, page.width, page.height)
         right_half_page = page.within_bbox(crop_box)
         right_half_image = right_half_page.to_image(resolution=300)
-        right_half_mage_path = f"temp/temp_right_half_page_{page.page_number}.jpg"
-        right_half_image.save(right_half_mage_path)
-        right_extracted_text = pytesseract.image_to_string(right_half_mage_path, lang='eng')
+        right_half_image_path = f"temp/temp_right_half_page_{page.page_number}.jpg"
+        right_half_image.save(right_half_image_path)
+        right_extracted_text = pytesseract.image_to_string(right_half_image_path, lang='eng')
         print(right_extracted_text)
-        os.remove(left_half_mage_path)
-        os.remove(right_half_mage_path)
+        os.remove(left_half_image_path)
+        os.remove(right_half_image_path)
         return left_extracted_text + "\n" + right_extracted_text
 
 
@@ -130,3 +134,4 @@ def wrap_text_file(input_file, output_file, line_length=80):
                     f_out.write(current_line.strip() + "\n")
             else:
                 f_out.write("\n")
+
