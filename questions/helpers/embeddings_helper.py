@@ -2,17 +2,29 @@ import os
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_google_genai import ChatGoogleGenerativeAI
 from ..helpers import common_utils as cu
-
-os.environ["GOOGLE_API_KEY"] = "AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI"
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+from .pdf_utils import *
 
 
-def create_embeddings_and_store(pdf_file_path, embeddings_store_path):
+def create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_type, number_of_columns, use_llm):
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    extracted_text = cu.extract_text_from_scanned_pdf(pdf_file_path)
-    print(extracted_text)
+    if pdf_type == "scanned":
+        if use_llm:
+            if number_of_columns == 1:
+                extracted_text = SingleColumnScannedPDFExtractorUsingLLM().extract_text(pdf_file_path)
+            else:
+                extracted_text = TwoColumnScannedPDFExtractorUsingLLM().extract_text(pdf_file_path)
+        else:
+            if number_of_columns == 1:
+                extracted_text = SingleColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
+            else:
+                extracted_text = TwoColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
+    else:
+        if number_of_columns == 1:
+            extracted_text = SingleColumnDigitalPDFExtractor().extract_text(pdf_file_path)
+        else:
+            extracted_text = TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
+
     pdf_chunks = text_splitter.split_text(extracted_text)
     embeddings = HuggingFaceEmbeddings()
     vectorstore = FAISS.from_texts(pdf_chunks, embeddings)

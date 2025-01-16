@@ -40,40 +40,6 @@ def merge_json_lists(list1_path, list2_path, output_file_path):
         print(f"Error: {e}")
 
 
-def extract_text_from_pdf(pdf_path):
-    with pdfplumber.open(pdf_path) as pdf:
-        text = ""
-        for page in pdf.pages:
-            text += page.extract_text()
-            print(page.extract_text())
-    return text
-
-
-def extract_text_from_scanned_pdf_using_gemini(pdf_path):
-    try:
-        with pdfplumber.open(pdf_path) as pdf:
-            all_text = ""
-            for page_num, page in enumerate(pdf.pages):
-                image_path = f"temp/temp_page_{page_num}.png"
-                page.to_image(resolution=300).save(image_path)
-                img = Image.open(image_path)
-                try:
-                    response = model.generate_content(
-                        ["extract text from this image without any additional context or headers", img])
-                except Exception as e:
-                    print(f"Error processing page {page_num + 1}: {e}")
-                    break
-                time.sleep(5)
-                text = response.text
-                print(text)
-                os.remove(image_path)
-                all_text += text + "\n"
-            return all_text
-    except Exception as e:
-        print(f"Error processing PDF: {e}")
-        return ""
-
-
 def extract_text_from_page(page_number, pdf_path):
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[page_number]
@@ -134,4 +100,3 @@ def wrap_text_file(input_file, output_file, line_length=80):
                     f_out.write(current_line.strip() + "\n")
             else:
                 f_out.write("\n")
-
