@@ -29,6 +29,7 @@ class SingleColumnDigitalPDFExtractor(PDFExtractor):
                 extracted_text = page.extract_text()
                 if extracted_text is None:
                     return ""
+                print(extracted_text)
                 return extracted_text
         except Exception as e:
             raise
@@ -58,6 +59,7 @@ class SingleColumnScannedPDFExtractorUsingLLM(PDFExtractor):
                 extracted_text = response.text
                 if extracted_text is None:
                     return ""
+                print(extracted_text)
                 return extracted_text
         except Exception as e:
             raise
@@ -67,7 +69,8 @@ class SingleColumnScannedPDFExtractorUsingLLM(PDFExtractor):
             with ProcessPoolExecutor(max_workers=1) as executor:
                 number_of_pages = len(pdfplumber.open(pdf_file_path).pages)
                 results = list(
-                    executor.map(self.extract_page_text, [pdf_file_path] * number_of_pages, range(number_of_pages)))
+                    executor.map(self.extract_page_text, [pdf_file_path] * number_of_pages,
+                                 range(1, number_of_pages - 5)))
                 return "\n".join(results)
         except Exception as e:
             print(f"Error processing PDF: {e}")
@@ -87,6 +90,8 @@ class SingleColumnScannedPDFExtractorUsingOCR(PDFExtractor):
                 extracted_text = pytesseract.image_to_string(image_path)
                 if extracted_text is None:
                     return ""
+                print(extracted_text)
+
                 return extracted_text
 
         except Exception as e:
@@ -95,7 +100,7 @@ class SingleColumnScannedPDFExtractorUsingOCR(PDFExtractor):
     def extract_text(self, pdf_file_path):
         try:
             with ProcessPoolExecutor(max_workers=4) as executor:
-                number_of_pages = len(pdfplumber.open(pdf_file_path).pages) -330
+                number_of_pages = len(pdfplumber.open(pdf_file_path).pages)
                 results = list(
                     executor.map(self.extract_page_text, [pdf_file_path] * number_of_pages, range(number_of_pages)))
                 return "\n".join(results)
@@ -122,7 +127,9 @@ class TwoColumnDigitalPDFExtractor(PDFExtractor):
                 right_half_extracted_text = right_half_page.extract_text()
                 if right_half_extracted_text is None:
                     right_half_extracted_text = ""
-                return left_half_extracted_text + "\n" + right_half_extracted_text
+                extracted_text = left_half_extracted_text + "\n" + right_half_extracted_text
+                print(extracted_text)
+                return extracted_text
         except Exception as e:
             raise
 
@@ -167,6 +174,7 @@ class TwoColumnScannedPDFExtractorUsingLLM(PDFExtractor):
                     right_half_extracted_text = ""
                 time.sleep(5)
                 extracted_text = left_half_extracted_text + "\n" + right_half_extracted_text
+                print(extracted_text)
                 return extracted_text
         except Exception as e:
             raise
@@ -209,7 +217,9 @@ class TwoColumnScannedPDFExtractorUsingOCR(PDFExtractor):
                 right_half_extracted_text = pytesseract.image_to_string(right_half_image_path, lang=lang)
                 if right_half_extracted_text is None:
                     right_half_extracted_text = ""
-                return left_half_extracted_text + "\n" + right_half_extracted_text
+                extracted_text = left_half_extracted_text + "\n" + right_half_extracted_text
+                print(extracted_text)
+                return extracted_text
         except Exception as e:
             raise
 
