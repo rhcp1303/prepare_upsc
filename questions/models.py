@@ -23,18 +23,6 @@ class Explanation(models.Model):
     def __str__(self):
         return self.explanation_text
 
-
-class Options(models.Model):
-    question = models.ForeignKey(PYQuestion, on_delete=models.CASCADE, related_name='options')
-    option_text = models.TextField(null=False, blank=False)
-    is_correct = models.BooleanField(default=False, null=False)
-    option_num = models.PositiveIntegerField(null=False)
-
-    class Meta:
-        ordering = ['option_num']
-        db_table = 'prelims_options'
-        unique_together = ('question', 'option_num')
-
     def __str__(self):
         return self.option_text
 
@@ -61,3 +49,15 @@ class PYQuestion(models.Model):
         num_questions_per_year = PYQuestion.objects.filter(year=self.year).count()
         if num_questions_per_year >= 100:
             raise ValidationError("Cannot exceed 100 questions per year")
+
+
+class Options(models.Model):
+    question = models.ForeignKey(PYQuestion, on_delete=models.CASCADE, related_name='options')
+    option_text = models.TextField(null=False, blank=False)
+    is_correct = models.BooleanField(default=False, null=False)
+    option_num = models.PositiveIntegerField(null=False)
+
+    class Meta:
+        ordering = ['option_num']
+        db_table = 'prelims_options'
+        unique_together = ('question', 'option_num')
