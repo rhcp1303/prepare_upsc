@@ -1,8 +1,9 @@
 from django.db import models
 from .helpers import common_utils as cu
 
+
 class PYQuestions(models.Model):
-    subject = models.CharField(max_length=4, choices=[code.value for code in cu.SubjectCode])
+    subject = models.CharField(max_length=4, choices=[(code.value, code.name) for code in cu.SubjectCode])
     question_text = models.TextField(null=False, blank=False)
     year = models.PositiveIntegerField(null=False)
     q_num = models.PositiveIntegerField(null=False)
@@ -40,5 +41,3 @@ class Explanations(models.Model):
 
     def __str__(self):
         return self.explanation_text
-
-
