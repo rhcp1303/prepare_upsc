@@ -1,16 +1,40 @@
 import json
-import time
-import pdfplumber
-import google.generativeai as genai
-from PIL import Image
-import os
-import pytesseract
-from langdetect import detect
-import typing_extensions as typing
-from concurrent.futures import ProcessPoolExecutor
+from enum import Enum
 
-model = genai.GenerativeModel("gemini-1.5-flash")
-genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
+
+class SubjectCode(Enum):
+    MODERN_INDIAN_HISTORY = "MIH"
+    HISTORY_ART_AND_CULTURE = "HAC"
+    POLITY = "POL"
+    INTERNATIONAL_RELATIONS = "IR"
+    ECONOMICS = "ECO"
+    SCIENCE_AND_TECH = "ST"
+    ENVIRONMENT = "ENV"
+    GEOGRAPHY = "GEO"
+    MISCELLANEOUS = "MISC"
+
+
+class PatternType(Enum):
+    SINGLE_STATEMENT = "SINGLE"
+    TWO_STATEMENT_CORRECT_OPTIONS = "TWO_CORR"
+    TWO_STATEMENTS_ASSERTION_REASONING = "ASSERTION"
+    MULTIPLE_STATEMENTS = "MULTI_STMT"
+    MULTIPLE_OPTIONS_SELECT_CORRECT_ELIMINATION = "MULTI_ELIM"
+    MULTIPLE_OPTIONS_SELECT_NUMBER_STYLE = "MULTI_NUM"
+    MATCH_THE_PAIRS_CODE_STYLE = "MATCH_CODE"
+    MATCH_THE_PAIRS_NUMBER_STYLE = "MATCH_NUM"
+    MULTIPLE_DESCRIPTIONS_IDENTIFY_SUBJECT = "MULTI_DESC"
+
+
+class QuestionDifficultyLevel(Enum):
+    EASY = 'easy'
+    MODERATE = 'moderate'
+    DIFFICULT = 'difficult'
+
+
+class PDFFileType(Enum):
+    SCANNED = 'scanned'
+    DIGITAL = 'digital'
 
 
 def write_to_json(data, output_path):
@@ -38,50 +62,6 @@ def merge_json_lists(list1_path, list2_path, output_file_path):
         print(f"Error decoding JSON: {e}")
     except ValueError as e:
         print(f"Error: {e}")
-
-
-def extract_text_from_page(page_number, pdf_path):
-    with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[page_number]
-        crop_box = (0, 0, page.width / 2, page.height)
-        left_half_page = page.within_bbox(crop_box)
-        left_half_image = left_half_page.to_image(resolution=300)
-        left_half_image_path = f"temp/temp_left_half_page_{page.page_number}.jpg"
-        left_half_image.save(left_half_image_path)
-        left_extracted_text = pytesseract.image_to_string(left_half_image_path, lang='eng')
-        print(left_extracted_text)
-        crop_box = (page.width / 2, 0, page.width, page.height)
-        right_half_page = page.within_bbox(crop_box)
-        right_half_image = right_half_page.to_image(resolution=300)
-        right_half_image_path = f"temp/temp_right_half_page_{page.page_number}.jpg"
-        right_half_image.save(right_half_image_path)
-        right_extracted_text = pytesseract.image_to_string(right_half_image_path, lang='eng')
-        print(right_extracted_text)
-        os.remove(left_half_image_path)
-        os.remove(right_half_image_path)
-        return left_extracted_text + "\n" + right_extracted_text
-
-
-def extract_text_from_scanned_pdf(pdf_path):
-    with ProcessPoolExecutor(max_workers=4) as executor:
-        results = list(executor.map(extract_text_from_page,
-                                    range(len(pdfplumber.open(pdf_path).pages)),
-                                    [pdf_path] * len(pdfplumber.open(pdf_path).pages)))
-    return "\n".join(filter(None, results))
-
-
-def call_gemini_api_to_get_explanation(prompt):
-    class Explanation(typing.TypedDict):
-        correct_option: str
-        explanation: str
-
-    response = model.generate_content(
-        prompt,
-        generation_config=genai.GenerationConfig(
-            response_mime_type="application/json", response_schema=Explanation
-        ),
-    )
-    return response.text
 
 
 def wrap_text_file(input_file, output_file, line_length=80):

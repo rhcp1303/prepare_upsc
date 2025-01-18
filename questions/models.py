@@ -1,19 +1,8 @@
 from django.db import models
-
-
-class Subjects(models.TextChoices):
-    MODERN_INDIAN_HISTORY = "MIH", "Modern Indian History"
-    HISTORY_ART_AND_CULTURE = "HAC", "History, Art & Culture"
-    POLITY = "POL", "Polity"
-    INTERNATIONAL_RELATIONS = "IR", "International Relations"
-    ECONOMICS = "ECO", "Economics"
-    SCIENCE_AND_TECH = "ST", "Science & Technology"
-    ENVIRONMENT = "ENV", "Environment"
-    GEOGRAPHY = "GEO", "Geography"
-    MISCELLANEOUS = "MISC", "Miscellaneous"
+from .helpers import common_utils as cu
 
 class PYQuestions(models.Model):
-    subject = models.CharField(max_length=4, choices=Subjects.choices)
+    subject = models.CharField(max_length=4, choices=[code.value for code in cu.SubjectCode])
     question_text = models.TextField(null=False, blank=False)
     year = models.PositiveIntegerField(null=False)
     q_num = models.PositiveIntegerField(null=False)

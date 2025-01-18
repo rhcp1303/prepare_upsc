@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 from ...helpers import insert_pyq_to_db_helper as helper
+
+
 class Command(BaseCommand):
     help = 'Load questions from a JSON file and insert into database'
 
@@ -16,4 +18,3 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Questions loaded successfully.'))
         except ValidationError as e:
             self.stderr.write(self.style.ERROR(f'Error loading questions: {e}'))
-

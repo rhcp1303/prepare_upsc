@@ -1,4 +1,3 @@
-import json
 import re
 import time
 from django.core.management.base import BaseCommand
@@ -7,7 +6,6 @@ from ...helpers import rag_langchain_helper as rag_helper
 from ...helpers import (load_questions_from_pdf_helper as question_loader,
                         question_classifier_helper as classifier,
                         common_utils)
-from langchain.prompts import PromptTemplate
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")

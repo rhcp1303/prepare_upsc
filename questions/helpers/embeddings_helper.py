@@ -25,7 +25,7 @@ def create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_type, 
         else:
             extracted_text = TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
 
-    print(extracted_text+"\n\n")
+    print(extracted_text + "\n\n")
     print(len(extracted_text))
     pdf_chunks = text_splitter.split_text(extracted_text)
     embeddings = HuggingFaceEmbeddings()

@@ -25,8 +25,6 @@ def load_questions_from_json(json_data):
             subject_name = question_data.get('subject')
             try:
                 subject = subject_mapping.get(subject_name)
-                if subject is None:
-                    raise ValidationError(f"Invalid subject: {subject_name}")
             except KeyError:
                 raise ValidationError(f"Invalid subject: {subject_name}")
 

@@ -117,3 +117,7 @@ explanation: description about each of the national parks and short note on thei
     answer = qa_chain.run(query)
     print(answer)
     return answer
+
+def generate_mock_mcq(subject, topic, pattern_type, difficulty_level):
+    return
+

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from ...helpers import embeddings_helper as helper
+from ...helpers import embeddings_helper as helper, common_utils as cu
 
 
 class Command(BaseCommand):
@@ -8,9 +8,10 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--pdf_file_path', type=str, help='path to the pdf question paper', required=True)
         parser.add_argument('--pdf_file_type', type=str, help='type of pdf',
-                            choices=['scanned', 'digital'], required=True, )
+                            choices=[file_type.value for file_type in cu.PDFFileType], required=True, )
         parser.add_argument('--number_of_columns', type=int, help='number of columns in the pdf layout', required=True)
-        parser.add_argument('--use_llm', type=str, help='use llm or ocr for extraction', choices=['yes','no'], required=True)
+        parser.add_argument('--use_llm', type=str, help='use llm or ocr for extraction', choices=['yes', 'no'],
+                            required=True)
 
     def handle(self, *args, **options):
         pdf_file_path = options['pdf_file_path']
