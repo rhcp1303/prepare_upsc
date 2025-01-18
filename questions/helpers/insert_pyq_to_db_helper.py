@@ -1,5 +1,5 @@
 from pydantic_core._pydantic_core import ValidationError
-from ..models import Subjects, PYQuestion, Options, Explanation
+from ..models import Subjects, PYQuestions, Options, Explanations
 import json
 
 
@@ -30,11 +30,16 @@ def load_questions_from_json(json_data):
             except KeyError:
                 raise ValidationError(f"Invalid subject: {subject_name}")
 
-            question = PYQuestion.objects.create(
+            explanation = Explanations.objects.create(
+                explanation_text=question_data['explanation']
+            )
+
+            question = PYQuestions.objects.create(
                 subject=subject.value,
                 question_text=question_data['question_text'],
                 year=question_data['year'],
-                q_num=question_data.get('Q.No.')
+                q_num=question_data.get('Q.No.'),
+                explanation=explanation
             )
             correct_option = question_data['correct_option']
             option_a = Options.objects.create(
@@ -61,10 +66,7 @@ def load_questions_from_json(json_data):
                 is_correct=(correct_option == 'd'),
                 option_num=4
             )
-            explanation = Explanation.objects.create(
-                question=question,
-                explanation_text=question_data['explanation']
-            )
+
 
         except KeyError as e:
             raise ValidationError(f"Missing required field: {e}")
