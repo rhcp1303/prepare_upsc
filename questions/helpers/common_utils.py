@@ -7,6 +7,7 @@ class SubjectCode(Enum):
     HISTORY_ART_AND_CULTURE = "HAC"
     POLITY = "POL"
     INTERNATIONAL_RELATIONS = "IR"
+    SECURITY = 'SEC'
     ECONOMICS = "ECO"
     SCIENCE_AND_TECH = "ST"
     ENVIRONMENT = "ENV"

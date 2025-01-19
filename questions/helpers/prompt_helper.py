@@ -1,20 +1,7 @@
-prompt_for_getting_explanation = """
-    Give me the correct option of the above upsc prelims multiple choice question and also the explanation of the 
-    correct answer by giving description about each named entity and important keywords in the question as well as 
-    about the options when the options contain named entity or important keywords in the json format with two fields
-    {"correct_option": correct option out of the four given ones,"explanation": detailed explanation}
-    Below are some examples showing a question, explanation, and answer format:
-**Example:**
-**Prompt:** 
-18. Which one of the following National Parks lies completely in the temperate alpine zone?
-(a) Manas National Park
-(b) Namdapha National Park
-(c) Neora Valley National Park
-(d) Valley of Flowers National Park
+prompt_for_single_stmt_type_question = """
 
-                **Response:**
-correct_option: (d)
-explanation: description about each of the national parks
+create 10 upsc style mcqs with 4 options each 
+
 """
 
 
