@@ -70,7 +70,7 @@ class SingleColumnScannedPDFExtractorUsingLLM(PDFExtractor):
                 number_of_pages = len(pdfplumber.open(pdf_file_path).pages)
                 results = list(
                     executor.map(self.extract_page_text, [pdf_file_path] * number_of_pages,
-                                 range(1, number_of_pages - 5)))
+                                 range(22, 31)))
                 return "\n".join(results)
         except Exception as e:
             print(f"Error processing PDF: {e}")

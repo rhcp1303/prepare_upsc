@@ -13,7 +13,7 @@ def load_questions_from_json(json_data):
 
     subject_mapping = {
         "history_art_and_culture": SubjectCode.HISTORY_ART_AND_CULTURE.value,
-        "modern_indian_history": SubjectCode.MODERN_INDIAN_HISTORY.value,
+        "modern_indian_history_helper": SubjectCode.MODERN_INDIAN_HISTORY.value,
         "economy": SubjectCode.ECONOMICS.value,
         "environment": SubjectCode.ENVIRONMENT.value,
         "science_and_technology": SubjectCode.SCIENCE_AND_TECH.value,

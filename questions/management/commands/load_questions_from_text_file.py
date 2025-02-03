@@ -1,14 +1,14 @@
 import re
+from langchain_google_genai import ChatGoogleGenerativeAI
 import time
 from django.core.management.base import BaseCommand
-import google.generativeai as genai
-from ...helpers import rag_langchain_helper as rag_helper
 from ...helpers import (load_questions_from_pdf_helper as question_loader,
                         question_classifier_helper as classifier,
                         common_utils)
+import os
 
-model = genai.GenerativeModel("gemini-1.5-flash")
-genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
+os.environ["GOOGLE_API_KEY"] = "AIzaSyC_w68KVtMCloF5V3NKAUBp6EdhqcA0ylw"
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 
 
 class Command(BaseCommand):
@@ -41,7 +41,7 @@ class Command(BaseCommand):
             question_prompt = question_list[i] + "\n(a) " + option_a_list[i] + "\n(b) " + option_b_list[i] + "\n(c) " + \
                               option_c_list[i] + "\n(d) " + option_d_list[i] + "\n"
             try:
-                response = rag_helper.call_langchain(question_prompt)
+                response = llm.invoke(question_prompt).content
                 correct_option = re.findall(regex_pattern_for_correct_option, response)[0]
                 explanation = response
             except Exception as e:

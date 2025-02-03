@@ -1,3 +1,6 @@
 from django.contrib import admin
+from questions.models import PYQuestions, PYQOptions, PYQExplanations
 
-# Register your models here.
+admin.site.register(PYQuestions)
+admin.site.register(PYQOptions)
+admin.site.register(PYQExplanations)

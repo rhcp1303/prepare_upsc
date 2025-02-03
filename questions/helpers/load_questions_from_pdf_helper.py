@@ -2,11 +2,15 @@ import re
 from .pdf_utils import *
 
 
-def load_questions_from_pdf(pdf_file_path, pdf_type, extract_option='yes'):
+def load_questions_from_pdf(pdf_file_path, pdf_type, extract_option='no'):
     if pdf_type == 'scanned':
-        extracted_text = TwoColumnScannedPDFExtractorUsingLLM().extract_text(pdf_file_path)
+        extracted_text = TwoColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
     else:
         extracted_text = TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
+
+    with open("temp/training_data.txt", "w") as file:
+        file.write(extracted_text)
+
     extracted_questions = extract_questions_from_text(extracted_text, extract_option)
     return extracted_questions
 
@@ -24,14 +28,15 @@ def extract_questions_from_text(extracted_text, extract_option):
     print("\n\nnumber of questions extracted: " + str(len(question_list)) + "\n\n")
     if extract_option == 'no':
         return {"list_of_question": question_list}
-    answer_list_a = re.findall(regex_pattern_for_answers[0], extracted_text, re.DOTALL)
-    answer_list_b = re.findall(regex_pattern_for_answers[1], extracted_text, re.DOTALL)
-    answer_list_c = re.findall(regex_pattern_for_answers[2], extracted_text, re.DOTALL)
-    answer_list_d = re.findall(regex_pattern_for_answers[3], extracted_text, re.DOTALL)
+    option_a_list = re.findall(regex_pattern_for_answers[0], extracted_text, re.DOTALL)
+    option_b_list = re.findall(regex_pattern_for_answers[1], extracted_text, re.DOTALL)
+    option_c_list = re.findall(regex_pattern_for_answers[2], extracted_text, re.DOTALL)
+    option_d_list = re.findall(regex_pattern_for_answers[3], extracted_text, re.DOTALL)
     return {
         "list_of_question": question_list,
-        "list_of_option_a": answer_list_a,
-        "list_of_option_b": answer_list_b,
-        "list_of_option_c": answer_list_c,
-        "list_of_option_d": answer_list_d
+        "list_of_option_a": option_a_list,
+        "list_of_option_b": option_b_list,
+        "list_of_option_c": option_c_list,
+        "list_of_option_d": option_d_list
     }
+
