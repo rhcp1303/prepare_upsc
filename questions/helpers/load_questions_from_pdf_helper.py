@@ -2,19 +2,6 @@ import re
 from .pdf_utils import *
 
 
-def load_questions_from_pdf(pdf_file_path, pdf_type, extract_option='no'):
-    if pdf_type == 'scanned':
-        extracted_text = TwoColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
-    else:
-        extracted_text = TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
-
-    with open("temp/training_data.txt", "w") as file:
-        file.write(extracted_text)
-
-    extracted_questions = extract_questions_from_text(extracted_text, extract_option)
-    return extracted_questions
-
-
 def extract_questions_from_text(extracted_text, extract_option):
     regex_pattern_for_question = r"\d+\.\s*(.*?)(?=\n\(a\)\s*|$)"
     regex_pattern_for_answers = [r"\n\(a\)\s*(.*?)(?=\s*\n|$)",

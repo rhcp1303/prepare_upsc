@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
-from ...helpers import (load_questions_from_pdf_helper as question_loader,
+from ...helpers import (load_questions_from_pdf_helper as helper,
                         common_utils as cu)
+from ...helpers import pdf_utils as pu
 
 
 class Command(BaseCommand):
@@ -18,7 +19,13 @@ class Command(BaseCommand):
         pdf_file_path = options['pdf_file_path']
         pdf_type = options['pdf_file_type']
         subject = options['subject'] or ""
-        question_dict = question_loader.load_questions_from_pdf(pdf_file_path, pdf_type, extract_option="no")
+        if pdf_type == 'scanned':
+            extracted_text = pu.TwoColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
+        else:
+            extracted_text = pu.TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
+        with open("temp/training_data.txt", "w") as file:
+            file.write(extracted_text)
+        question_dict = helper.extract_questions_from_text(extracted_text, "no")
         question_list = question_dict["list_of_question"]
         data = []
         q = len(question_list)
