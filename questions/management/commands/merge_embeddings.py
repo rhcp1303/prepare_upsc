@@ -18,6 +18,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         from ...helpers import embeddings_helper as helper
-        base_url = "questions/data/faiss_files/consolidated_source_index/m"
+        base_url = "questions/data/faiss_files/ca"
         l = self.find_faiss_folders(base_url)
         helper.merge_embeddings_and_store(l)

@@ -2,15 +2,16 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
-from ..helpers.prompt_helper.mock_mcq_prompt_helper.single_statement_question_prompt_helper import \
+from ..helpers.prompt_helpers.mock_mcq_prompt_helper.single_statement_question_prompt_helper import \
     single_statement_question_prompt
-from ..helpers.prompt_helper.mock_mcq_prompt_helper.two_statement_question_prompt_helper import \
-    two_statement_question_prompt
-from ..helpers.prompt_helper.mock_mcq_prompt_helper.three_statement_question_prompt_helper import \
-    three_statement_question_prompt
-from ..helpers.prompt_helper.mock_mcq_prompt_helper.identify_features_question_prompt_helper import \
+from ..helpers.prompt_helpers.mock_mcq_prompt_helper.two_statements_question_prompt_helper import \
+    two_statements_question_prompt
+from ..helpers.prompt_helpers.mock_mcq_prompt_helper.three_statements_question_prompt_helper import \
+    three_statements_question_prompt
+from ..helpers.prompt_helpers.mock_mcq_prompt_helper.identify_features_question_prompt_helper import \
     identify_features_question_prompt
-from ..helpers.prompt_helper.mock_mcq_prompt_helper.match_the_pairs_question_prompt_helper import match_the_pairs_prompt
+from ..helpers.prompt_helpers.mock_mcq_prompt_helper.match_the_pairs_question_prompt_helper import \
+    match_the_pairs_prompt
 import multiprocessing
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -24,42 +25,43 @@ api_key_5 = "AIzaSyBq2_GdMf0KhowSVSb0hn4Z_8B81kBewXY"
 
 def worker(prompt, suffix, api_key, source_content, target_content):
     query = prompt.format(source_content=source_content,
-                          target_content=target_content)
+                          target_content=target_content,
+                          topic="science and technology")
     os.environ["GOOGLE_API_KEY"] = api_key
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
     response = llm.invoke(query).content
-    with open("temp/environment_" + suffix, "a+") as f:
-        f.write(response + "\n\n")
+    with open("temp/snt_" + suffix, "a+") as output_file:
+        output_file.write(response + "\n\n")
 
 
 def generate_mock_mcq():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
 
-    vectorstore = FAISS.load_local(
-        "questions/data/faiss_files/consolidated_source_index/environment.faiss",
+    source_vectorstore = FAISS.load_local(
+        "questions/data/faiss_files/consolidated_source_index/snt.faiss",
         embeddings=embeddings,
         allow_dangerous_deserialization=True)
-    search_vector = FAISS.load_local("questions/data/faiss_files/consolidated_target_index/complete_environment.faiss",
-                                     embeddings=embeddings,
-                                     allow_dangerous_deserialization=True)
-    list_of_doc_ids = list(vectorstore.index_to_docstore_id.values())
+    target_vectorstore = FAISS.load_local("questions/data/faiss_files/consolidated_target_index/complete_snt.faiss",
+                                          embeddings=embeddings,
+                                          allow_dangerous_deserialization=True)
+    list_of_doc_ids = list(source_vectorstore.index_to_docstore_id.values())
     print("------------------")
     print(len(list_of_doc_ids))
     print("------------------")
     document_num = 1
     for doc_id in list_of_doc_ids:
         print(f"processing document number: {document_num}")
-        docs = vectorstore.get_by_ids([doc_id])
+        docs = source_vectorstore.get_by_ids([doc_id])
         source_content = docs[0]
         print(source_content)
-        searched_content = search_vector.similarity_search(str(source_content), k=10)
+        searched_content = target_vectorstore.similarity_search(str(source_content), k=10)
         target_content = ""
         for doc in searched_content:
             target_content += str(doc) + "\n"
 
         for prompt, suffix, api_key in [(single_statement_question_prompt, "single_statement.txt", api_key_1),
-                                        (two_statement_question_prompt, "two_statement.txt", api_key_2),
-                                        (three_statement_question_prompt, "three_statement.txt", api_key_3),
+                                        (two_statements_question_prompt, "two_statement.txt", api_key_2),
+                                        (three_statements_question_prompt, "three_statement.txt", api_key_3),
                                         (identify_features_question_prompt, "identify_features.txt", api_key_4),
                                         (match_the_pairs_prompt, "match_the_pairs.txt", api_key_5)
                                         ]:

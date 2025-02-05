@@ -39,4 +39,3 @@ def extract_questions_from_text(extracted_text, extract_option):
         "list_of_option_c": option_c_list,
         "list_of_option_d": option_d_list
     }
-

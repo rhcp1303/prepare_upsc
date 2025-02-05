@@ -22,7 +22,7 @@ def create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_type, 
         else:
             extracted_text = TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
 
-    text_splitter = CharacterTextSplitter(chunk_size=3000, chunk_overlap=400, separator=".")
+    text_splitter = CharacterTextSplitter(chunk_size=10000, chunk_overlap=400, separator=".")
 
     print(extracted_text + "\n\n")
     print(len(extracted_text))
@@ -41,4 +41,4 @@ def merge_embeddings_and_store(file_list):
         print(file_list[i])
         vectorstore_2 = FAISS.load_local(file_list[i], embeddings=embeddings, allow_dangerous_deserialization=True)
         vectorstore_1.merge_from(vectorstore_2)
-    vectorstore_1.save_local("questions/data/faiss_files/modern_history.faiss")
+    vectorstore_1.save_local("questions/data/faiss_files/ca_2025.faiss")

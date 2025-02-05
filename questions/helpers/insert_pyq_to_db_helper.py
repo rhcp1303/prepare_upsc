@@ -19,7 +19,6 @@ def load_questions_from_json(json_data):
         "science_and_technology": SubjectCode.SCIENCE_AND_TECH.value,
         "polity": SubjectCode.POLITY.value,
         "geography": SubjectCode.GEOGRAPHY.value,
-        "international_relations": SubjectCode.INTERNATIONAL_RELATIONS.value
     }
 
     for question_data in data:

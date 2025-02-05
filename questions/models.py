@@ -60,9 +60,6 @@ class BaseMockMCQ(models.Model):
     question_text = models.TextField(null=False, blank=False)
     pattern_type = models.CharField(max_length=15, choices=[(pattern_type.value, pattern_type.name) for pattern_type in
                                                             cu.PatternType])
-    difficulty_level = models.CharField(max_length=10,
-                                        choices=[(difficulty_level.value, difficulty_level.name) for difficulty_level in
-                                                 cu.QuestionDifficultyLevel])
     explanation = models.OneToOneField('MockMCQExplanations', on_delete=models.CASCADE, related_name='%(class)s')
 
     class Meta:
