@@ -5,7 +5,7 @@ from ...helpers import pdf_utils as pu
 
 
 class Command(BaseCommand):
-    help = 'Prepare json file for training question classifier model'
+    help = 'Prepare JSON file for training question classifier model'
 
     def add_arguments(self, parser):
         parser.add_argument('--pdf_file_path', type=str, help='path to the pdf question paper', required=True)

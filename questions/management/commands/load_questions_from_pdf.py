@@ -10,7 +10,7 @@ genai.configure(api_key="AIzaSyCxTCYQO7s23L33kC4Io4G-i1p1ytD-OiI")
 
 
 class Command(BaseCommand):
-    help = 'Extract questions from a pdf and write to a json file for further use as source file for databse ingestion'
+    help = 'Extract questions from a pdf and write to a JSON file for further use'
 
     def add_arguments(self, parser):
         parser.add_argument('pdf_file_path', type=str, help='path to the pdf question paper')

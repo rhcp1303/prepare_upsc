@@ -33,6 +33,7 @@ class PYQuestions(models.Model):
     q_num = models.PositiveIntegerField(null=False)
     explanation = models.OneToOneField('PYQExplanations', on_delete=models.CASCADE, related_name='question')
 
+
     class Meta:
         ordering = ['year', 'q_num']
         db_table = 'prelims_pyqs'

@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    help = 'Create embeddings for a pdf to be reused in vector search'
+    help = 'Merge embeddings for multiple pdfs to generate a consolidated faiss file'
 
     def find_faiss_folders(self, path):
         faiss_folders = []

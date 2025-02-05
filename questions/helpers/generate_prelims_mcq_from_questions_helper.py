@@ -36,7 +36,6 @@ def worker(prompt, suffix, api_key, source_content, target_content):
 
 def generate_mock_mcq():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
-
     source_vectorstore = FAISS.load_local(
         "questions/data/faiss_files/consolidated_source_index/snt.faiss",
         embeddings=embeddings,
@@ -58,7 +57,6 @@ def generate_mock_mcq():
         target_content = ""
         for doc in searched_content:
             target_content += str(doc) + "\n"
-
         for prompt, suffix, api_key in [(single_statement_question_prompt, "single_statement.txt", api_key_1),
                                         (two_statements_question_prompt, "two_statement.txt", api_key_2),
                                         (three_statements_question_prompt, "three_statement.txt", api_key_3),

@@ -6,6 +6,8 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
+    help = 'Generate mcqs for upsc prelims mock test'
+
     def handle(self, *args, **options):
         logger.info(f"Starting generation of of questions:")
         helper.generate_mock_mcq()
