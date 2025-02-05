@@ -11,6 +11,7 @@ class SubjectCode(Enum):
     SCIENCE_AND_TECH = "SNT"
     ENVIRONMENT = "ENV"
     GEOGRAPHY = "GEO"
+    SOCIAL_ISSUES = "SOCI"
     MISCELLANEOUS = "MISC"
 
 
