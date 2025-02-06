@@ -6,14 +6,15 @@ from ..helpers.common_utils import SubjectCode
 class PYQuestionModelTest(TestCase):
 
     def setUp(self):
-        self.subject_choice = str(SubjectCode.MODERN_INDIAN_HISTORY)
+        self.subject_choice = SubjectCode.MODERN_INDIAN_HISTORY.value
+        print(self.subject_choice)
 
     def test_pyquestion_creation(self):
         pyquestion = PYQuestions.objects.create(
             year=2023,
             q_num=1,
             subject=self.subject_choice,
-            question_text="Sample Question",
+            question_text="This is a sample question with a long text",
             option_a="option a",
             option_b="option b",
             option_c="option c",
@@ -29,7 +30,7 @@ class PYQuestionModelTest(TestCase):
             year=2023,
             q_num=1,
             subject=self.subject_choice,
-            question_text="Sample Question",
+            question_text="This is a sample question with a long text",
             option_a="option a",
             option_b="option b",
             option_c="option c",
@@ -44,7 +45,7 @@ class PYQuestionModelTest(TestCase):
             year=2023,
             q_num=1,
             subject=self.subject_choice,
-            question_text="Sample Question",
+            question_text="Sample Question A",
             option_a="option a",
             option_b="option b",
             option_c="option c",
@@ -56,7 +57,7 @@ class PYQuestionModelTest(TestCase):
             year=2021,
             q_num=5,
             subject=self.subject_choice,
-            question_text="Sample Question",
+            question_text="Sample Question B",
             option_a="option a",
             option_b="option b",
             option_c="option c",

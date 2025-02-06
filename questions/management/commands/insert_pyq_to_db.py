@@ -14,7 +14,7 @@ class Command(BaseCommand):
         try:
             with open(json_file_path, 'r') as f:
                 json_data = f.read()
-            helper.load_questions_from_json(json_data)
+            helper.load_questions_into_db_from_json(json_data)
             self.stdout.write(self.style.SUCCESS('Questions loaded successfully.'))
         except ValidationError as e:
             self.stderr.write(self.style.ERROR(f'Error loading questions: {e}'))

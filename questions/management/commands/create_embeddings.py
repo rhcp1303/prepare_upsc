@@ -16,5 +16,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         pdf_file_path = options['pdf_file_path']
         embeddings_store_path = pdf_file_path.replace('.pdf', '.faiss')
-        helper.create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_type=options['pdf_file_type'],
+        helper.create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_file_type=options['pdf_file_type'],
                                            number_of_columns=options['number_of_columns'], use_llm=options['use_llm'])

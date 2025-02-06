@@ -1,26 +1,12 @@
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from .pdf_utils import *
+import extract_text_helper as helper
 
 
-def create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_type, number_of_columns, use_llm):
-    if pdf_type == "scanned":
-        if use_llm.lower() == 'yes':
-            if number_of_columns == 1:
-                extracted_text = SingleColumnScannedPDFExtractorUsingLLM().extract_text(pdf_file_path)
-            else:
-                extracted_text = TwoColumnScannedPDFExtractorUsingLLM().extract_text(pdf_file_path)
-        else:
-            if number_of_columns == 1:
-                extracted_text = SingleColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
-            else:
-                extracted_text = TwoColumnScannedPDFExtractorUsingOCR().extract_text(pdf_file_path)
-    else:
-        if number_of_columns == 1:
-            extracted_text = SingleColumnDigitalPDFExtractor().extract_text(pdf_file_path)
-        else:
-            extracted_text = TwoColumnDigitalPDFExtractor().extract_text(pdf_file_path)
+def create_embeddings_and_store(pdf_file_path, embeddings_store_path, pdf_file_type, number_of_columns, use_llm):
+    pdf_extractor = helper.select_pdf_extractor(pdf_file_type, number_of_columns, use_llm)
+    extracted_text = pdf_extractor.extract_text(pdf_file_path)
     text_splitter = CharacterTextSplitter(chunk_size=10000, chunk_overlap=400, separator=".")
     print(extracted_text + "\n\n")
     print(len(extracted_text))
