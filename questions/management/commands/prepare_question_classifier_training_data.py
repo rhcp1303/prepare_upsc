@@ -23,7 +23,7 @@ class Command(BaseCommand):
         use_llm = options['use_llm']
         pdf_extractor = extract_text_helper.select_pdf_extractor(pdf_file_type, number_of_columns, use_llm)
         extracted_text = pdf_extractor.extract_text(pdf_file_path)
-        question_dict = extract_questions_helper.extract_questions_from_text(extracted_text, "no")
+        question_dict = extract_questions_helper.extract_questions_from_text(extracted_text)
         question_list = question_dict["list_of_question"]
         data = []
         q = len(question_list)

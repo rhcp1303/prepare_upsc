@@ -31,6 +31,7 @@ class BaseMockMCQ(models.Model):
     option_b = models.TextField(null=False, blank=False)
     option_c = models.TextField(null=False, blank=False)
     option_d = models.TextField(null=False, blank=False)
+    correct_option = models.CharField(max_length=1, choices=[('a', 'a'), ('b', 'b'), ('c', 'c'), ('d', 'd')])
     explanation = models.TextField(null=False, blank=False)
 
     class Meta:
