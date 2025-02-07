@@ -17,4 +17,4 @@ class Command(BaseCommand):
             text = file.read()
         question_dict = helper.extract_pyqs_from_text(text)
         data = helper.create_pyq_dict(question_dict, year)
-        common_utils.write_to_json(data, 'questions/data/upsc_questions/temp_question_data.json')
+        common_utils.write_to_json(data, 'questions/data/pyq_jsons/temp_question_data.json')

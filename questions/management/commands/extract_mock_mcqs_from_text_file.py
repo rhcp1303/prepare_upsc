@@ -17,4 +17,4 @@ class Command(BaseCommand):
             text = file.read()
         question_dict = helper.extract_mock_questions_from_text(text)
         data = helper.create_mock_mcq_dict(question_dict, cu.PatternType)
-        cu.write_to_json(data, 'questions/data/upsc_questions/temp_question_data.json')
+        cu.write_to_json(data, 'questions/data/mock_mcq_jsons/temp_question_data.json')
