@@ -23,24 +23,24 @@ api_key_4 = "AIzaSyD0nx9rH7HhQZDpJrY0hOaOR9Xok4r-liM"
 api_key_5 = "AIzaSyBq2_GdMf0KhowSVSb0hn4Z_8B81kBewXY"
 
 
-def worker(prompt, suffix, api_key, source_content, target_content):
+def worker(prompt, prefix, suffix, api_key, source_content, target_content):
     query = prompt.format(source_content=source_content,
                           target_content=target_content,
                           topic="science and technology")
     os.environ["GOOGLE_API_KEY"] = api_key
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
     response = llm.invoke(query).content
-    with open("temp/snt_" + suffix, "a+") as output_file:
+    with open("temp/" + prefix + "_ " + suffix, "a+") as output_file:
         output_file.write(response + "\n\n")
 
 
-def generate_mock_mcq():
+def generate_mock_mcq(source_embeddings_path, target_embeddings_path, prefix):
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
     source_vectorstore = FAISS.load_local(
-        "questions/data/faiss_files/consolidated_source_index/snt.faiss",
+        source_embeddings_path,
         embeddings=embeddings,
         allow_dangerous_deserialization=True)
-    target_vectorstore = FAISS.load_local("questions/data/faiss_files/consolidated_target_index/complete_snt.faiss",
+    target_vectorstore = FAISS.load_local(target_embeddings_path,
                                           embeddings=embeddings,
                                           allow_dangerous_deserialization=True)
     list_of_doc_ids = list(source_vectorstore.index_to_docstore_id.values())
@@ -65,7 +65,7 @@ def generate_mock_mcq():
                                         ]:
             processes = []
             p = multiprocessing.Process(target=worker,
-                                        args=(prompt, suffix, api_key, source_content, target_content))
+                                        args=(prompt, prefix, suffix, api_key, source_content, target_content))
             processes.append(p)
             p.start()
         for p in processes:

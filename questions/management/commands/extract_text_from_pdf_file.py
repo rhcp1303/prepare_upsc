@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from ...helpers import extract_text_helper as helper
+from ...helpers import extract_text_helper as helper, common_utils as cu
 
 
 class Command(BaseCommand):

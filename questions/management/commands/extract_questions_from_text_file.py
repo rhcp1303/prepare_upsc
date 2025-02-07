@@ -4,7 +4,7 @@ from ...helpers import (extract_questions_helper as helper,
 
 
 class Command(BaseCommand):
-    help = 'Extract questions from a txt file and write to a JSON file for further use'
+    help = 'Extract questions from a text file and write to a JSON file for further use'
 
     def add_arguments(self, parser):
         parser.add_argument('text_file_path', type=str, help='path to the question paper text')

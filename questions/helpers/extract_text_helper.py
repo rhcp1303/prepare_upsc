@@ -1,4 +1,4 @@
-import pdf_utils as pu
+from ..helpers import pdf_utils as pu
 
 
 def select_pdf_extractor(pdf_file_type, number_of_columns, use_llm):
