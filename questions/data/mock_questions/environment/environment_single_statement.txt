@@ -2575,16 +2575,6 @@ Here are some UPSC-style multiple-choice questions based on the provided target 
 **Explanation:** The WWF logo features the Giant Panda, a globally recognized symbol of conservation. The other options are incorrect, as they are not the animals depicted in the WWF logo.
 
 
-**12. In Uttarakhand, Oak-Rhododendron vegetation is characteristic of which zone?**
-
-(a) Temperate zone
-(b) Alpine zone
-(c) Tropical zone
-(d) Subtropical zone
-
-**(Note: The provided text does not contain a definitive answer to this question.  This question is therefore flawed and would need to be removed or revised with more complete information from the source material.)**
-
-
 
 
 Here are some UPSC-style multiple-choice questions based on the provided target content, adhering to all specified criteria.  Each question is designed to be challenging and requires a deep understanding of the material.  Note that the difficulty level is subjective and may vary depending on the candidate's background.
@@ -10633,7 +10623,7 @@ An ecosystem encompasses both the biotic (living) and abiotic (non-living) compo
 **9. What is the primary reason why a tropical rainforest, once removed, does not regenerate quickly compared to a tropical deciduous forest?**
 
 (a) The slow growth rate of rainforest species.
-b) The invasion of exotic species into the rainforest soil.
+(b) The invasion of exotic species into the rainforest soil.
 (c) The poor viability of propagules in rainforest trees.
 (d) The nutrient-deficient soil of rainforests.
 
@@ -14084,7 +14074,7 @@ The most direct and impactful cause of deforestation and subsequent land degrada
 
 (a) Segregation of waste into wet, dry, and hazardous categories.
 (b) Payment of user fees for collection, disposal, and processing.
-c)  Establishment of on-site waste treatment facilities for all types of waste.
+(c)  Establishment of on-site waste treatment facilities for all types of waste.
 (d) Compliance with source segregation practices for events exceeding 100 attendees.
 
 
@@ -14567,7 +14557,7 @@ The correct answer is (c) because stratospheric aerosol injection directly addre
 
 (a) The existence of substantial stranded assets in the form of existing coal power plants and infrastructure.
 (b) The potential for significant job losses in coal-related industries, impacting livelihoods in various regions.
-c) The widespread availability of cheap and efficient renewable energy sources that readily replace coal power.
+(c) The widespread availability of cheap and efficient renewable energy sources that readily replace coal power.
 (d)  The provision of irresponsible financing for overseas coal projects by developed economies, hindering the global transition.
 
 

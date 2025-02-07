@@ -35,20 +35,42 @@ def extract_pyqs_from_text(extracted_text):
 
 
 def extract_mock_questions_from_text(extracted_text):
-    regex_pattern_for_question = r"\*\*\d+\.\s*( .*?)(?=\n\(a\)\s*|$)"
-    regex_pattern_for_answers = [r"\(a\)\s*( .*?)(?=\n\(b\)\s*|$)",
-                                 r"\(b\)\s*( .*?)(?=\n\(c\)\s*|$)",
-                                 r"\(c\)\s*( .*?)(?=\n\(d\)\s*|$)",
-                                 r"\(d\)\s*( .*?)(?=\*\*|$)"]
-    regex_pattern_for_correct_answer = r"\*\*Correct Answer:\*\*\s*( .*?)(?=\s*\*\*|$)"
-    regex_pattern_for_explanation = r"\*\*Explanation:\*\*([\s\S]*?)(?=\*\*\d+\.)"
-    question_list = re.findall(regex_pattern_for_question, extracted_text, re.DOTALL)
-    option_a_list = re.findall(regex_pattern_for_answers[0], extracted_text, re.DOTALL)
-    option_b_list = re.findall(regex_pattern_for_answers[1], extracted_text, re.DOTALL)
-    option_c_list = re.findall(regex_pattern_for_answers[2], extracted_text, re.DOTALL)
-    option_d_list = re.findall(regex_pattern_for_answers[3], extracted_text, re.DOTALL)
-    correct_answer_list = re.findall(regex_pattern_for_correct_answer, extracted_text, re.DOTALL)
-    explanation_list = re.findall(regex_pattern_for_explanation, extracted_text, re.DOTALL)
+    regex_pattern_for_question_answer_explanation = r"(\*\*\d+\.\s*.*?)(?=\n\*\*\d+\.)"
+    regex_pattern_for_question = r"\*\*\d+\.\s*(.*?)(?=\n\(a\)\s*|$)"
+    regex_pattern_for_options = [r"\n\(a\)\s*(.*?)(?=\n\(b\)\s*|$)",
+                                 r"\n\(b\)\s*(.*?)(?=\n\(c\)\s*|$)",
+                                 r"\n\(c\)\s*(.*?)(?=\n\(d\)\s*|$)",
+                                 r"\n\(d\)\s*(.*?)(?=\*\*|$)"]
+    regex_pattern_for_correct_option = r"\*\*Correct\s*Answer\s*:\s*\*\*\s*(.*?)(?=\s*\*\*|$)"
+    regex_pattern_for_explanation = r"\*\*\s*Explanation\s*:\s*\*\*(.*?)(?=\s*\*\*\s*\d+\.|$)"
+    question_answer_explanation_list = re.findall(regex_pattern_for_question_answer_explanation, extracted_text,
+                                                  re.DOTALL)
+    print("----------------------------")
+    print(len(question_answer_explanation_list))
+    print("----------------------------")
+    question_list = []
+    option_a_list = []
+    option_b_list = []
+    option_c_list = []
+    option_d_list = []
+    correct_option_list = []
+    explanation_list = []
+    for question_answer_explanation in question_answer_explanation_list:
+        print(question_answer_explanation)
+        question = re.findall(regex_pattern_for_question, question_answer_explanation, re.DOTALL)[0]
+        option_a = re.findall(regex_pattern_for_options[0], question_answer_explanation, re.DOTALL)[0]
+        option_b = re.findall(regex_pattern_for_options[1], question_answer_explanation, re.DOTALL)[0]
+        option_c = re.findall(regex_pattern_for_options[2], question_answer_explanation, re.DOTALL)[0]
+        option_d = re.findall(regex_pattern_for_options[3], question_answer_explanation, re.DOTALL)[0]
+        correct_option = re.findall(regex_pattern_for_correct_option, question_answer_explanation, re.DOTALL)[0]
+        explanation = re.findall(regex_pattern_for_explanation, question_answer_explanation, re.DOTALL)[0]
+        question_list.append(question)
+        option_a_list.append(option_a)
+        option_b_list.append(option_b)
+        option_c_list.append(option_c)
+        option_d_list.append(option_d)
+        correct_option_list.append(correct_option)
+        explanation_list.append(explanation)
 
     return {
         "list_of_question": question_list,
@@ -56,7 +78,7 @@ def extract_mock_questions_from_text(extracted_text):
         "list_of_option_b": option_b_list,
         "list_of_option_c": option_c_list,
         "list_of_option_d": option_d_list,
-        "list_of_correct_answer": correct_answer_list,
+        "list_of_correct_option": correct_option_list,
         "list_of_explanation": explanation_list
     }
 
@@ -108,16 +130,15 @@ def create_mock_mcq_dict(question_dict, pattern_type):
     option_b_list = question_dict["list_of_option_b"]
     option_c_list = question_dict["list_of_option_c"]
     option_d_list = question_dict["list_of_option_d"]
-    correct_answer_list = question_dict["list_of_correct_answer"]
+    correct_option_list = question_dict["list_of_correct_option"]
     explanation_list = question_dict["list_of_explanation"]
     print("number of questions extracted: " + str(len(question_list)))
     print("number of option_a extracted: " + str(len(option_a_list)))
     print("number of option_b extracted: " + str(len(option_b_list)))
     print("number of option_c extracted: " + str(len(option_c_list)))
     print("number of option_d extracted: " + str(len(option_d_list)))
-    print("number of correct_answers extracted: " + str(len(correct_answer_list)))
+    print("number of correct_options extracted: " + str(len(correct_option_list)))
     print("number of explanations extracted: " + str(len(explanation_list)))
-
     for i in range(len(question_list)):
         data.append({
             "question_text": question_list[i],
@@ -126,7 +147,7 @@ def create_mock_mcq_dict(question_dict, pattern_type):
             "option_b": option_b_list[i],
             "option_c": option_c_list[i],
             "option_d": option_d_list[i],
-            "correct_option": correct_answer_list[i],
+            "correct_option": correct_option_list[i],
             "explanation": explanation_list[i]
         })
-        return data
+    return data
