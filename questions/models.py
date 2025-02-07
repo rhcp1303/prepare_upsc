@@ -16,7 +16,7 @@ class PYQuestions(models.Model):
 
     class Meta:
         ordering = ['year', 'q_num']
-        db_table = 'prelims_pyqs'
+        db_table = 'prelims_pyq'
         unique_together = ('year', 'q_num')
 
     def __str__(self):
