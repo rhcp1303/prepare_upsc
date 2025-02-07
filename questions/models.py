@@ -23,10 +23,15 @@ class PYQuestions(models.Model):
         return self.question_text[:50] + "..."
 
 
-class BaseMockMCQ(models.Model):
-    question_text = models.TextField(null=False, blank=False)
+class MockMCQ(models.Model):
+    subject = models.CharField(max_length=4, choices=[(code.value, code.name) for code in cu.SubjectCode])
+    question_content_type = models.CharField(max_length=6,
+                                     choices=[(question_content_type.value, question_content_type.name) for
+                                              question_content_type in
+                                              cu.QuestionContentType])
     pattern_type = models.CharField(max_length=20, choices=[(pattern_type.value, pattern_type.name) for pattern_type in
                                                             cu.PatternType])
+    question_text = models.TextField(null=False, blank=False)
     option_a = models.TextField(null=False, blank=False)
     option_b = models.TextField(null=False, blank=False)
     option_c = models.TextField(null=False, blank=False)
@@ -35,50 +40,8 @@ class BaseMockMCQ(models.Model):
     explanation = models.TextField(null=False, blank=False)
 
     class Meta:
-        abstract = True
         ordering = ['pattern_type']
+        db_table = 'prelims_mock_mcq'
 
     def __str__(self):
         return self.question_text[:50] + "..."
-
-
-class ModernIndianHistoryMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcq_history'
-
-
-class HistoryArtAndCultureMockMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcq_history_art_and_culture'
-
-
-class GeographyMockMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcq_geography'
-
-
-class PolityMockMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcq_polity'
-
-
-class EconomicsMockMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcq_economics'
-
-
-class ScienceAndTechMockMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcq_science_and_tech'
-
-
-class EnvironmentMockMCQ(BaseMockMCQ):
-    class Meta:
-        db_table = 'prelims_mock_mcqs_environment'
-
-
-class CurrentAffairsMockMCQ(BaseMockMCQ):
-    subject = models.CharField(max_length=4, choices=[(code.value, code.name) for code in cu.SubjectCode])
-
-    class Meta:
-        db_table = 'prelims_mock_mcq_current_affairs'

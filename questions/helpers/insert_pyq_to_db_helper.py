@@ -10,8 +10,6 @@ def load_questions_into_db_from_json(json_data):
     except json.JSONDecodeError:
         raise ValidationError("Invalid JSON data.")
 
-    print(data)
-
     subject_mapping = {
         "history_art_and_culture": SubjectCode.HISTORY_ART_AND_CULTURE.value,
         "modern_indian_history": SubjectCode.MODERN_INDIAN_HISTORY.value,

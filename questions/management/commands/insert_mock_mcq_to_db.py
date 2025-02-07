@@ -4,7 +4,7 @@ from ...helpers import insert_pyq_to_db_helper as helper
 
 
 class Command(BaseCommand):
-    help = 'Load previous year questions from a JSON file and insert into database'
+    help = 'Load generated mock questions from a JSON file and insert into database'
 
     def add_arguments(self, parser):
         parser.add_argument('json_file', type=str, help='Path to the JSON file')

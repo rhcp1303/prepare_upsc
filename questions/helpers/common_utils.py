@@ -15,6 +15,11 @@ class SubjectCode(Enum):
     MISCELLANEOUS = "MISC"
 
 
+class QuestionContentType(Enum):
+    STATIC = 'STATIC'
+    CURRENT_AFFAIRS = 'CA'
+
+
 class PatternType(Enum):
     SINGLE_STATEMENT = "SINGLE_STATEMENT"
     TWO_STATEMENTS = "TWO_STATEMENTS"

@@ -123,7 +123,7 @@ def create_pyq_dict(question_dict, year):
         return data
 
 
-def create_mock_mcq_dict(question_dict, pattern_type):
+def create_mock_mcq_dict(question_dict, pattern_type, subject, content_type):
     data = []
     question_list = question_dict["list_of_question"]
     option_a_list = question_dict["list_of_option_a"]
@@ -141,8 +141,10 @@ def create_mock_mcq_dict(question_dict, pattern_type):
     print("number of explanations extracted: " + str(len(explanation_list)))
     for i in range(len(question_list)):
         data.append({
-            "question_text": question_list[i],
+            "subject": subject,
+            "content_type": content_type,
             "pattern_type": pattern_type,
+            "question_text": question_list[i],
             "option_a": option_a_list[i],
             "option_b": option_b_list[i],
             "option_c": option_c_list[i],
