@@ -32860,8 +32860,6 @@ Here are some UPSC-style Multiple Choice Questions (MCQs) based on the provided 
 **Explanation:** This question tests the candidate's knowledge of regulatory frameworks for crypto assets. Option (c), Non-fungible tokens (NFTs), is correctly identified as being outside the scope of MiCA, as stated in the text.  The other options are included within the scope of the legislation. The explanation clarifies the distinctions between different types of crypto assets and their regulatory treatment.
 
 
-**57.  The Digital India RISC-V Microprocessor (DIR-V) Program aims to establish India as a hub for which type of microprocessor technology?**
-
 **1.  A lunar mission successfully returned a propulsion module from lunar orbit to Earth's orbit for the first time.  Which organization achieved this feat?**
 
 (a) NASA

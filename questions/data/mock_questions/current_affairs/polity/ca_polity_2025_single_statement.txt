@@ -2116,15 +2116,6 @@ Black holes are extremely dense objects with gravity so strong that nothing, not
 Hydroxyurea is a medication used in the treatment of sickle cell disease. It's not used as a food preservative (a), fruit ripening agent (b), or herbicide (c).  Its use in treating sickle cell disease stems from its ability to modify the production of red blood cells, reducing the frequency of painful crises associated with the condition. Therefore, only option (d) correctly identifies its therapeutic application.
 
 
-**13. Which statement(s) about Hawking radiation are correct?**
-
-1. The theory was proposed by Stephen Hawking in 1974.
-2. ... (The second statement is incomplete in the provided text).
-
-Assuming a complete second statement would address a factual aspect of Hawking radiation, and given that statement 1 is demonstrably true (Hawking proposed his theory in 1974), we cannot definitively answer without the complete second statement.  Therefore, further information is needed.  However, knowing that Hawking proposed his theory in 1974 is a key piece of information.
-
-
-**UPSC Style MCQs based on Target Content:**
 
 
 **1.  A portable microcontroller-based instrument designed to modernize the election process, manufactured by Bharat Electronics Limited and Electronic Corporation of India Limited, and used in conjunction with VVPATs to enhance electoral transparency is:**

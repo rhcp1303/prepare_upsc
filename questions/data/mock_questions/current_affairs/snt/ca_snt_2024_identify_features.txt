@@ -20059,11 +20059,6 @@ How many of the above statements are correct?
 Statements 1 and 2 are correct descriptions of the FLAMINGO project. Statement 3 is incorrect; the consortium is international. Statement 4 is incorrect; FLAMINGO uses simulations.
 
 
-**41. Consider the following regarding FEAST software:**
-
-1. FEAST is a Finite Element Analysis (FEA) software developed by VSSC.
-2.  FEA is a computerized method for predicting a product's reaction
-
 **1. Consider the following statements about Graphene:**
 
 1. It exhibits high surface area and excellent thermal conductivity.
@@ -37602,10 +37597,6 @@ How many of the above statements accurately reflect the use of attenuated virus 
 **Explanation:** Attenuated vaccines are used for LSD.  They are not universally effective against all Nipah strains.  There is no vaccine for Hepatitis C.  Attenuated vaccines are used for some strains of Avian Influenza A (H9N2).  Therefore, statements 1, 3, and 4 are correct. The distractors manipulate the effectiveness and applicability to different viral diseases to increase the difficulty.
 
 
-**40. Consider the following regarding neglected tropical diseases (NTDs):**
-
-1.  Noma
-
 **1. Consider the following statements about Battery Energy Storage Systems (BESS):**
 
 1.  BESS utilizes electrochemical reactions to store electricity.
@@ -42847,23 +42838,6 @@ How many of the above definitions are correct?
 
 Statements 1 and 2 are correct definitions.  Statement 3 is incorrect; a blazar is an active galaxy. Statement 4 is incorrect; EMIC waves are electromagnetic, not gravitational.
 
-
-**37. Consider the following statements related to the  FLAMINGO Project:**
-
-1. It is a project related to space exploration.
-2. It focuses on developing new satellite technologies.
-3. It is a collaborative effort involving multiple international agencies.
-4. Its primary goal is to enhance communication infrastructure.
-
-How many of these statements accurately describe the FLAMINGO project (assuming it exists and is related to space technology)?  (Note:  This question relies on your knowledge of existing space projects; if you lack information on FLAMINGO, you may need to research it.)
-
-(a) Only one
-(b) Only two
-(c) Only three
-(d) All four
-
-
-**Correct Answer:**  (This answer will depend on the existence and details of a "FLAMINGO Project" in space technology.  If such a project exists, the correct answer and explanation would need to be provided based on its actual characteristics.)
 
 
 **38. Consider the following related to the  FEAST (Finite Element Analysis of Structures) technique:**
@@ -76225,14 +76199,6 @@ How many of the above statements correctly describe rare diseases and related po
 **Explanation:**
 
 Statements 1 and 3 are correct. The prevalence definition is accurate, and the NPRD does offer financial assistance. Statement 2 is incorrect; most rare diseases are genetic, not environmentally caused. Statement 4 is also incorrect; orphan drugs are developed for rare diseases, not common ones. Therefore, only two statements are accurate, making (b) the correct answer. Options (a), (c), and (d) contain inaccuracies regarding the etiology of rare diseases or the purpose of orphan drugs.
-
-
-**32. Consider the following statements about Fixed Dose Combination (FDC) drugs:**
-
-1.  They contain one or more active pharmaceutical ingredients (APIs).
-2.  They always require prior approval from the DCGI before being marketed.
-3.  FDCs always result in increased efficacy and reduced toxicity compared to single-ingredient drugs.
-4.  Pharmacodynamic mismatches in FDCs can lead to reduced efficacy or enhanced toxicity.
 
 **1. Consider the following statements regarding Genome Editing:**
 

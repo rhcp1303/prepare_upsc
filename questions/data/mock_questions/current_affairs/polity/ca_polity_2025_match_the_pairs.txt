@@ -7430,7 +7430,7 @@ Pairs 2, 3, and 4 are correctly matched. In 1969, Jammu & Kashmir, Assam, and Na
 Which of the pairs given above is/are correctly matched?
 (a) 1 and 2 only
 (b) 2 only
-(b) 2 and 4 only
+(c) 2 and 4 only
 (d) 2, 3, and 4 only
 
 

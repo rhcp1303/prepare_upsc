@@ -895,7 +895,7 @@ Only pair 3 is correctly matched. The Pradhan Mantri Mudra Yojana (PMMY) loans a
     Which of the pairs given above is/are correctly matched?
     (a) 1 and 2 only
     (b) 2 only
-    (b) 1, 2 and 3 only
+    (c) 1, 2 and 3 only
     (d) None
 
 

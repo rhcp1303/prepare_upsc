@@ -35,12 +35,14 @@ def extract_pyqs_from_text(extracted_text):
 
 
 def extract_mock_questions_from_text(extracted_text):
-    regex_pattern_for_question_answer_explanation = r"(\*\*\d+\.\s*.*?)(?=\n\*\*\d+\.)"
+    filter_substring = [' text ', ' text,', '.text', ',text', ' text.', 'passage', 'excerpt', 'UPSC-style',
+                        'UPSC style']
+    regex_pattern_for_question_answer_explanation = r"(\*\*\d+\.\s*.*?)(?=\n\*\*\d+\.|\Z)"
     regex_pattern_for_question = r"\*\*\d+\.\s*(.*?)(?=\n\(a\)\s*|$)"
-    regex_pattern_for_options = [r"\n\(a\)\s*(.*?)(?=\n\(b\)\s*|$)",
-                                 r"\n\(b\)\s*(.*?)(?=\n\(c\)\s*|$)",
-                                 r"\n\(c\)\s*(.*?)(?=\n\(d\)\s*|$)",
-                                 r"\n\(d\)\s*(.*?)(?=\*\*|$)"]
+    regex_pattern_for_options = [r"\s*\(a\)\s*(.*?)(?=\(b\)\s*|$)",
+                                 r"\s*\(b\)\s*(.*?)(?=\(c\)\s*|$)",
+                                 r"\s*\(c\)\s*(.*?)(?=\(d\)\s*|$)",
+                                 r"\s*\(d\)\s*(.*?)(?=\*\*|$)"]
     regex_pattern_for_correct_option = r"\*\*Correct\s*Answer\s*:\s*\*\*\s*(.*?)(?=\s*\*\*|$)"
     regex_pattern_for_explanation = r"\*\*\s*Explanation\s*:\s*\*\*(.*?)(?=\s*\*\*\s*\d+\.|$)"
     question_answer_explanation_list = re.findall(regex_pattern_for_question_answer_explanation, extracted_text,
@@ -56,21 +58,30 @@ def extract_mock_questions_from_text(extracted_text):
     correct_option_list = []
     explanation_list = []
     for question_answer_explanation in question_answer_explanation_list:
+        flag = 0
+        for substring in filter_substring:
+            if substring.lower() in question_answer_explanation.lower():
+                flag = 1
+        if flag:
+            continue
         print(question_answer_explanation)
-        question = re.findall(regex_pattern_for_question, question_answer_explanation, re.DOTALL)[0]
-        option_a = re.findall(regex_pattern_for_options[0], question_answer_explanation, re.DOTALL)[0]
-        option_b = re.findall(regex_pattern_for_options[1], question_answer_explanation, re.DOTALL)[0]
-        option_c = re.findall(regex_pattern_for_options[2], question_answer_explanation, re.DOTALL)[0]
-        option_d = re.findall(regex_pattern_for_options[3], question_answer_explanation, re.DOTALL)[0]
-        correct_option = re.findall(regex_pattern_for_correct_option, question_answer_explanation, re.DOTALL)[0]
-        explanation = re.findall(regex_pattern_for_explanation, question_answer_explanation, re.DOTALL)[0]
-        question_list.append(question)
-        option_a_list.append(option_a)
-        option_b_list.append(option_b)
-        option_c_list.append(option_c)
-        option_d_list.append(option_d)
-        correct_option_list.append(correct_option)
-        explanation_list.append(explanation)
+        try:
+            question = re.findall(regex_pattern_for_question, question_answer_explanation, re.DOTALL)[0]
+            option_a = re.findall(regex_pattern_for_options[0], question_answer_explanation, re.DOTALL)[0]
+            option_b = re.findall(regex_pattern_for_options[1], question_answer_explanation, re.DOTALL)[0]
+            option_c = re.findall(regex_pattern_for_options[2], question_answer_explanation, re.DOTALL)[0]
+            option_d = re.findall(regex_pattern_for_options[3], question_answer_explanation, re.DOTALL)[0]
+            correct_option = re.findall(regex_pattern_for_correct_option, question_answer_explanation, re.DOTALL)[0]
+            explanation = re.findall(regex_pattern_for_explanation, question_answer_explanation, re.DOTALL)[0]
+            question_list.append(question)
+            option_a_list.append(option_a)
+            option_b_list.append(option_b)
+            option_c_list.append(option_c)
+            option_d_list.append(option_d)
+            correct_option_list.append(correct_option)
+            explanation_list.append(explanation)
+        except Exception as e:
+            continue
 
     return {
         "list_of_question": question_list,

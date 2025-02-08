@@ -6259,7 +6259,7 @@ Which of the pairs given above is/are correctly matched?
 (a) 1 only
 (b) 2 and 3 only
 (c) 3 and 4 only
-(c) 1, 2 and 3
+(d) 1, 2 and 3
 
 
 **Correct Answer:** (c)
