@@ -1,4 +1,5 @@
 from pathlib import Path
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_&jsw=2)orpm3&&#7sjnh3c3i0$&dg73fp=3y&nz$7yo)@vhjo'
 DEBUG = True
@@ -10,6 +11,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'questions'
 ]
 MIDDLEWARE = [
@@ -113,11 +115,11 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'info_file','debug_file','error_file'],
+            'handlers': ['console', 'info_file', 'debug_file', 'error_file'],
             'propagate': True,
         },
         'questions': {
-            'handlers': ['console', 'info_file','debug_file','error_file'],
+            'handlers': ['console', 'info_file', 'debug_file', 'error_file'],
             'level': 'DEBUG',
         },
     },
