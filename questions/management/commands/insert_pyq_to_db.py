@@ -7,10 +7,10 @@ class Command(BaseCommand):
     help = 'Load previous year questions from a JSON file and insert into database'
 
     def add_arguments(self, parser):
-        parser.add_argument('json_file', type=str, help='Path to the JSON file')
+        parser.add_argument('--json_file_path', type=str, help='Path to the JSON file')
 
     def handle(self, *args, **options):
-        json_file_path = options['json_file']
+        json_file_path = options['json_file_path']
         try:
             with open(json_file_path, 'r') as f:
                 json_data = f.read()

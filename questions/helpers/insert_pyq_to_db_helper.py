@@ -28,9 +28,10 @@ def load_questions_into_db_from_json(json_data):
                 raise ValidationError(f"Invalid subject: {subject_name}")
             explanation = question_data['explanation']
             correct_option = question_data['correct_option']
+
             PYQuestions.objects.create(
                 year=question_data['year'],
-                q_num=question_data.get('Q.No.'),
+                q_num=question_data.get('q_num'),
                 subject=subject,
                 question_text=question_data['question_text'],
                 option_a=question_data['option_a'],
@@ -42,5 +43,7 @@ def load_questions_into_db_from_json(json_data):
             )
         except (ValidationError, KeyError) as e:
             raise ValidationError(f"Error processing question: {e}")
+
+
 
     return
