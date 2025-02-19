@@ -4,6 +4,7 @@ import questions.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('generate_mock_test/', views.generate_mock_test, name='generate_mock_test'),
+    path('api/get_mock_mcq/', views.get_mock_mcq, name='get_mock_mcq'),
+    path('api/mock_test_view/', views.mock_test_view, name='mock_test_view'),
 
 ]

@@ -1,0 +1,125 @@
+ <style>
+        body {
+            font-family: "Source Sans Pro", sans-serif;
+            font-size: 16px;
+
+        }
+
+        #testContainer {
+            display: none;
+            padding: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            padding-left: 10px;
+        }
+        .question h3 {
+        text-indent: 20px;
+        padding-left: 40px;
+        margin-top: 0;
+        }
+
+        .question p {
+        text-indent: 20px;
+        }
+
+        .pairs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .pair {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .pair-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .options {
+            margin-left: 20px;
+        }
+
+        #resultContainer {
+            display: none;
+            padding: 20px;
+        }
+
+        #timer {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        #generateButton {
+            background-color: rgb(0, 95, 174);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #submitButton {
+            background-color: #5bc0de;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+        .option label {
+            cursor: pointer;
+        }
+
+        #score {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .explanation {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .explanation b {
+            font-weight: bold;
+        }
+        .question h3 {
+            margin-top: 0;
+            padding-left: 40px;
+        }
+        #questionContainer {
+            display: block;
+        }
+        .navigation-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .navigation-buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #prevButton {
+            background-color: #f0f0f0;
+        }
+        #nextButton {
+            background-color: #5bc0de;
+            color: white;
+        }
+    </style>

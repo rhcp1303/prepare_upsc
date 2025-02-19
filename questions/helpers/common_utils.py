@@ -1,5 +1,6 @@
 import json
 from enum import Enum
+import textwrap
 
 
 class SubjectCode(Enum):
@@ -60,19 +61,11 @@ def merge_json_lists(list1_path, list2_path, output_file_path):
         print(f"Error: {e}")
 
 
-def wrap_text_file(input_file, output_file, line_length=80):
-    with open(input_file, 'r') as f_in, open(output_file, 'w') as f_out:
-        for line in f_in:
-            if line.strip():
-                words = line.split()
-                current_line = ""
-                for word in words:
-                    if len(current_line) + len(word) + 1 <= line_length:
-                        current_line += word + " "
-                    else:
-                        f_out.write(current_line.strip() + "\n")
-                        current_line = word + " "
-                if current_line:
-                    f_out.write(current_line.strip() + "\n")
-            else:
-                f_out.write("\n")
+def wrap_text(text, width=70, break_long_words=True, break_on_hyphens=True):
+    try:
+        wrapped_text = textwrap.fill(text, width=width, break_long_words=break_long_words,
+                                     break_on_hyphens=break_on_hyphens)
+        return wrapped_text
+    except Exception as e:
+        print(f"Error during text wrapping: {e}")
+        return text

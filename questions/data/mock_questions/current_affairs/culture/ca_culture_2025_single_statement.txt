@@ -146,7 +146,7 @@ Here are some difficult multiple-choice questions based on the provided target c
 
 **1.  A significant historical figure, known for temple reconstruction and patronage of arts,  played a crucial role in the development of the Holkar dynasty. Which of the following accurately describes this individual's contributions beyond her dynastic role?**
 
-(a)  She primarily focused on expanding the Holkar kingdom's military power through strategic alliances.
+(a)  =She primarily focused on expanding the Holkar kingdom's military power through strategic alliances.
 (b) Her main contributions centered on establishing new trade routes and boosting agricultural production.
 (c) She is renowned for her extensive reforms in the legal and administrative systems of Malwa.
 (d) She spearheaded the reconstruction of significant temples like Kashi Vishvanath and Somnath, and patronized notable scholars like Moropant and Khushali Ram.
