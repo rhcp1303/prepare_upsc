@@ -40,3 +40,9 @@ def evaluate_test(request):
 
         explanations.append(question['explanation'])
     return Response({'score': score, 'explanations': explanations})
+
+def demo_view(request):
+    return render(request, 'demo.html')
+
+def demo2_view(request):
+    return render(request, 'demo2.html')
