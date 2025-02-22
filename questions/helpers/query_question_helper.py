@@ -39,10 +39,10 @@ with gr.Blocks() as demo:
             output_text = gr.Textbox(label="Questions", lines=20)
 
     with gr.Row():
-    with gr.Column(scale=1):
-        user_input = gr.Textbox(label="Enter a topic or query")
-        submit_btn = gr.Button("Submit")
+        with gr.Column(scale=1):
+            user_input = gr.Textbox(label="Enter a topic or query")
+            submit_btn = gr.Button("Submit")
 
-submit_btn.click(query_question, inputs=user_input, outputs=output_text)
+    submit_btn.click(query_question, inputs=user_input, outputs=output_text)
 
 demo.launch()
