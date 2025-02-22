@@ -3,9 +3,11 @@ from rest_framework.response import Response
 from .models import MockMCQ
 from .serializers import MockMCQSerializer
 from django.shortcuts import render
+from . import services
+
 
 @api_view(['GET'])
-def get_mock_mcq(request):
+def get_subjectwise_mock_mcq(request):
     subject = request.GET.get('subject', None)
     num_questions = int(request.GET.get('num_questions', 20))
     if num_questions <= 0:
@@ -14,6 +16,25 @@ def get_mock_mcq(request):
         questions = MockMCQ.objects.filter(subject=subject).order_by('?')[:num_questions]
     else:
         questions = MockMCQ.objects.order_by('?')[:num_questions]
+    serializer = MockMCQSerializer(questions, many=True)
+    return Response({"questions": serializer.data}, status=200)
+
+
+@api_view(['GET'])
+def get_comprehensive_mock_mcq(request):
+    subject_quotas = {
+        "MIH": {"STATIC": 10, "CA": 0},
+        "HAC": {"STATIC": 4, "CA": 2},
+        "POL": {"STATIC": 10, "CA": 7},
+        "IRS": {"STATIC": 0, "CA": 4},
+        "ECO": {"STATIC": 6, "CA": 9},
+        "SNT": {"STATIC": 5, "CA": 9},
+        "ENV": {"STATIC": 6, "CA": 10},
+        "GEO": {"STATIC": 16, "CA": 0},
+        "SOCI": {"STATIC": 0, "CA": 2}
+    }
+    subject_quotas = request.GET.get('subject_quotas', subject_quotas)
+    questions = services.get_mock_mcq(subject_quotas)
     serializer = MockMCQSerializer(questions, many=True)
     return Response({"questions": serializer.data}, status=200)
 
@@ -29,20 +50,19 @@ def evaluate_test(request):
     answers = data.get('answers')
     score = 0
     explanations = []
-
     for i, question in enumerate(questions):
         correct_answer_index = question['correct_option']
         user_answer_index = answers.get(str(i))
         is_correct = user_answer_index is not None and user_answer_index == correct_answer_index
-
         if is_correct:
             score += 1
-
         explanations.append(question['explanation'])
     return Response({'score': score, 'explanations': explanations})
 
+
 def demo_view(request):
     return render(request, 'demo.html')
+
 
 def demo2_view(request):
     return render(request, 'demo2.html')
