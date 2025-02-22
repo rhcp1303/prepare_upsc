@@ -38,7 +38,7 @@ with gr.Blocks() as demo:
         with gr.Column(scale=1):
             output_text = gr.Textbox(label="Questions", lines=20)
 
-    with gr.Row():  wq
+    with gr.Row():
     with gr.Column(scale=1):
         user_input = gr.Textbox(label="Enter a topic or query")
         submit_btn = gr.Button("Submit")
