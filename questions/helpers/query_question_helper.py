@@ -1,48 +1,34 @@
-import gradio as gr
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
+import json
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.vectorstores.faiss import FAISS
+import random
+import streamlit as st
 
 
-def query_question(user_topic_query):
+def query_question(user_topic_query, num_questions):
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
-    embeddings_path = "questions/data/faiss_folders/question.faiss"
-    try:
-        vectorstore = FAISS.load_local(
-            embeddings_path,
-            embeddings=embeddings,
-            allow_dangerous_deserialization=True)
-    except Exception as e:
-        return f"Error loading vectorstore: {e}"
-
-    results = vectorstore.similarity_search_with_score(user_topic_query, k=5)
-    output = ""
-    question_number = 1
-    for doc, score in results:
-        output += f"Q. {question_number})\n"
-        question = doc.page_content.replace("**", "\n")
-        question = question.replace("\nOptions:\n", "\n")
-        question = question.replace("\nA:", "\n(a)")
-        question = question.replace("\nB:", "\n(b)")
-        question = question.replace("\nC:", "\n(c)")
-        question = question.replace("\nD:", "\n(d)")
-        question = question.replace("Question:", "")
-
-        output += f"{question}\n"
-        output += "\n"
-        question_number += 1
-    return output
-
-
-with gr.Blocks() as demo:
-    with gr.Row():
-        with gr.Column(scale=1):
-            output_text = gr.Textbox(label="Questions", lines=20)
-
-    with gr.Row():
-        with gr.Column(scale=1):
-            user_input = gr.Textbox(label="Enter a topic or query")
-            submit_btn = gr.Button("Submit")
-
-    submit_btn.click(query_question, inputs=user_input, outputs=output_text)
-
-demo.launch()
+    embeddings_store_path = "questions/data/faiss_folders/question.faiss"
+    vectorstore = FAISS.load_local(embeddings_store_path, embeddings=embeddings,
+                                   allow_dangerous_deserialization=True)
+    retriever = vectorstore.as_retriever(search_kwargs={"k": num_questions})
+    docs = retriever.get_relevant_documents(user_topic_query)
+    retrieved_mcqs = []
+    for i, doc in enumerate(docs):
+        item = json.loads(doc.page_content)
+        retrieved_mcqs.append(item)
+        options = ['a', 'b', 'c', 'd']
+        random.shuffle(options)
+        option_mapping = {}
+        for option in options:
+            if option == 'a':
+                option_mapping[option] = item['option_a']
+            elif option == 'b':
+                option_mapping[option] = item['option_b']
+            elif option == 'c':
+                option_mapping[option] = item['option_c']
+            elif option == 'd':
+                option_mapping[option] = item['option_d']
+        for option in options:
+            print(f"{option}. {option_mapping[option]}")
+        print("\n\n")
+    return retrieved_mcqs

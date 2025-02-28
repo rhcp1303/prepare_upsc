@@ -9,3 +9,4 @@ static/
 *~
 temp/
 *.png
+/questions/data/faiss_folders/question.faiss/

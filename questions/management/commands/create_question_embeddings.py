@@ -11,10 +11,9 @@ class Command(BaseCommand):
         for root, dirs, files in os.walk(path):
             for file in files:
                 if file.endswith(".json"):
-                    json_file_list.append(root)
-                    break
+                    json_file_list.append(os.path.join(root, file))
         print(json_file_list)
-        return list(set(json_file_list))
+        return json_file_list
 
     def add_arguments(self, parser):
         parser.add_argument('--base_url', type=str,

@@ -1,5 +1,5 @@
-from langchain.vectorstores import FAISS
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.vectorstores.faiss import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 import json
 from langchain.docstore.document import Document
@@ -29,8 +29,12 @@ def load_mcqs_from_json(filepath):
         data = json.load(f)
     documents = []
     for item in data:
-        content = f"Question: {item['question_text']}\nOptions:\nA: {item['option_a']}\nB: {item['option_b']}\nC: {item['option_c']}\nD: {item['option_d']}\nAnswer: {item['correct_option']}\nExplanation: {item['explanation']}"
-        metadata = {"subject": item['subject']}
+        content = {"question_text": item['question_text'], "option_a": item['option_a'], "option_b": item['option_b'],
+                   "option_c": item['option_c'], "option_d": item['option_d'], "correct_option": item['correct_option'],
+                   "explanation": item['explanation']}
+        metadata = {"subject": item['subject'], "content_type": item['content_type'],
+                    "pattern_type": item['pattern_type']}
+        content = json.dumps(content, ensure_ascii=False)
         documents.append(Document(page_content=content, metadata=metadata))
     return documents
 
