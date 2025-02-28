@@ -2,8 +2,6 @@ import json
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores.faiss import FAISS
 import random
-import streamlit as st
-
 
 def query_question(user_topic_query, num_questions):
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
