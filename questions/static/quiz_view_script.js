@@ -53,7 +53,7 @@ function displayQuestion() {
     // Create a frame for the question number
     const questionNumberFrame = document.createElement('div');
     questionNumberFrame.className = 'question-number-frame'; // Add a class for styling
-    questionNumberFrame.textContent = `Q.${currentQuestionIndex + 1}`;
+    questionNumberFrame.textContent = `Q. ${currentQuestionIndex + 1} )`;
     questionContainer.appendChild(questionNumberFrame);
 
 
@@ -131,7 +131,9 @@ function showResults() {
         const isCorrect = userAnswer === correctAnswer;
 
         resultsHTML += `
-            <p><strong>Q${index + 1}: ${question.question_text.replace(/\n/g, '<br>')}</strong></p>
+            <div class="question-result">
+                <div class="question-number-frame">Q. ${index + 1} )</div>
+                <p>${question.question_text.replace('**','').replace(/\n/g, '<br><br>')}</p>
         `;
 
         const options = ['a', 'b', 'c', 'd'];
@@ -157,10 +159,9 @@ function showResults() {
             resultsHTML += optionBtn.outerHTML; // Append the button's HTML to the results
         });
 
-        resultsHTML += `<p>Your Answer: ${userAnswer ? userAnswer.toUpperCase() : 'Not Answered'}</p>`;
-        resultsHTML += `<p>Correct Answer: ${correctAnswer.toUpperCase()}</p>`;
-        resultsHTML += `<p>Explanation: ${question.explanation.replace(/\n/g, '<br>')}</p>`;
-
+        resultsHTML += `
+            <p class="explanation">Explanation: ${question.explanation.replace(/\n/g, '<br>')}</p>
+        `;
         if (isCorrect) {
             score += 2;
             correctCount++;
