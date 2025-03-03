@@ -5,13 +5,10 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const submitBtn = document.getElementById('submitBtn');
 const resultsContainer = document.getElementById('resultsContainer');
-const timerDisplay = document.getElementById('timer');
 
 let questions = [];
 let userAnswers = {};
 let currentQuestionIndex = 0;
-let timeLeft = 120;
-let timerInterval;
 
 async function fetchQuestions(query) {
     try {
@@ -45,13 +42,7 @@ function startQuiz() {
     submitBtn.style.display = 'inline-block';
     currentQuestionIndex = 0;
     userAnswers = {};
-    timeLeft = questions.length * 72;
-    console.log("Initial timeLeft:", timeLeft);
-    startTimer();
     displayQuestion();
-
-    // Show the timer container
-    document.getElementById('timer-container').style.display = 'inline-block';
 }
 
 function displayQuestion() {
@@ -95,31 +86,6 @@ function displayQuestion() {
     nextBtn.disabled = currentQuestionIndex === questions.length - 1;
 }
 
-function startTimer() {
-    updateTimerDisplay();
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) {
-            nextQuestion();
-        }
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-    // Update progress bar
-    const progress = (timeLeft / (questions.length * 72)) * 100; // Calculate progress percentage
-    const progressBar = document.getElementById('timer-progress');
-    if (progressBar) {
-        progressBar.style.transform = `scaleX(${progress / 100})`; // Scale the progress bar
-    }
-}
-
 function nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
@@ -137,7 +103,6 @@ function prevQuestion() {
 }
 
 function showResults() {
-    clearInterval(timerInterval);
     questionContainer.style.display = 'none';
     prevBtn.style.display = 'none';
     nextBtn.style.display = 'none';

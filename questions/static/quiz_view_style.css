@@ -78,8 +78,8 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background: linear-gradient(to right,#F0E6EF, #DAB9C8);
-    color: #333;
+    background-color: #667eea;
+    color: #000;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -87,7 +87,7 @@ body {
 
 #startBtn:hover, #prevBtn:hover, #nextBtn:hover, #submitBtn:hover {
     transform: scale(1.05);
-    background: linear-gradient(to right, #357ae8, #2869d1);
+    background: linear-gradient(to right, #D11A2A, #F08080);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
@@ -181,8 +181,8 @@ body {
 
 #timer-container {
     padding: 12px 18px;
-    margin-top: 15px;
-    background-color: #f8f8f8;
+    position: center;
+    background: linear-gradient(to right, #64b5f6, #42a5f5);
     display: none;
     border-radius: 8px;
     text-align: center;
