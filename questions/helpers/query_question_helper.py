@@ -3,11 +3,12 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores.faiss import FAISS
 import random
 
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
+embeddings_store_path = "questions/data/faiss_folders/question.faiss"
+vectorstore = FAISS.load_local(embeddings_store_path, embeddings=embeddings,
+                               allow_dangerous_deserialization=True)
+
 def query_question(user_topic_query, num_questions):
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
-    embeddings_store_path = "questions/data/faiss_folders/question.faiss"
-    vectorstore = FAISS.load_local(embeddings_store_path, embeddings=embeddings,
-                                   allow_dangerous_deserialization=True)
     retriever = vectorstore.as_retriever(search_kwargs={"k": num_questions})
     docs = retriever.get_relevant_documents(user_topic_query)
     retrieved_mcqs = []
