@@ -3,10 +3,8 @@
 __pycache__/
 db.sqlite3
 media/
-static/
 .idea/
 .DS_Store
 *~
 temp/
-*.png
 /questions/data/faiss_folders/question.faiss/
