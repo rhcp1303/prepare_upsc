@@ -50,7 +50,17 @@ function displayQuestion() {
     const question = questions[currentQuestionIndex];
     if (!question) return;
 
-    questionContainer.innerHTML = `<h3>${question.question_text.replace(/\n/g, '<br>')}</h3>`;
+    // Create a frame for the question number
+    const questionNumberFrame = document.createElement('div');
+    questionNumberFrame.className = 'question-number-frame'; // Add a class for styling
+    questionNumberFrame.textContent = `Q.${currentQuestionIndex + 1}`;
+    questionContainer.appendChild(questionNumberFrame);
+
+
+    // Create a separate element for the question text
+    const questionTextElement = document.createElement('h3');
+    questionTextElement.innerHTML = question.question_text.replace('**','').replace(/\n/g, '<br><br>');
+    questionContainer.appendChild(questionTextElement);
 
     const options = ['a', 'b', 'c', 'd'];
     options.forEach(option => {
