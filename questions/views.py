@@ -4,6 +4,7 @@ from .models import MockMCQ
 from .serializers import MockMCQSerializer
 from django.shortcuts import render
 from . import services
+from .helpers import query_question_helper as helper
 
 
 @api_view(['GET'])
@@ -66,3 +67,16 @@ def demo_view(request):
 
 def demo2_view(request):
     return render(request, 'demo2.html')
+
+def demo3_view(request):
+    return render(request, 'quiz_view.html')
+
+@api_view(['GET'])
+def get_quiz_questions(request):
+    query = request.GET.get('query')
+    num_questions = 5
+    try:
+        questions = helper.query_question(query, num_questions)
+        return Response(questions, status=200)  # Return questions as JSON
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
