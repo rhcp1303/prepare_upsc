@@ -1,0 +1,204 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.tagline-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.tagline {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #333;
+    animation: marquee 10s linear infinite;
+    padding-left: 100%;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#queryInput {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#queryInput:focus {
+    border-color: #a0c4ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(160, 196, 255, 0.5);
+}
+
+#startBtn, #prevBtn, #nextBtn, #submitBtn {
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(to right,#F0E6EF, #DAB9C8);
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#startBtn:hover, #prevBtn:hover, #nextBtn:hover, #submitBtn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #357ae8, #2869d1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+#prevBtn, #nextBtn, #submitBtn {
+    display: none;
+}
+
+#questionContainer h3 {
+    margin-top: 20px;
+    font-weight: normal;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px 24px;
+    margin-bottom: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.option-btn:hover {
+    border-color: #b0bec5;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+.option-btn.selected {
+    border-color: #64b5f6;
+    box-shadow: 0 5px 10px rgba(100, 149, 237, 0.3);
+    background-color: rgba(100, 149, 237, 0.1);
+}
+
+.option-number-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 16px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    color: #555;
+    font-weight: 600;
+}
+
+.option-btn.selected .option-number-container {
+    background-color: #64b5f6;
+    color: #fff;
+}
+
+#resultsContainer {
+    margin-top: 20px;
+    display: none;
+}
+
+.option-btn.correct {
+    background-color: rgba(102, 187, 106, 0.3);
+    color: #000;
+}
+
+.option-btn.incorrect {
+    background-color: #ffcccc; /* Light red background */
+    color: #000; /* Black text */
+}
+
+.option-btn.selected.incorrect { /* Add this rule */
+    background-color: rgba(255, 0, 0, 0.5); /* Strong red background */
+    color: #000;
+}
+
+.option-btn.selected {
+    border-color: #64b5f6;
+    box-shadow: 0 5px 10px rgba(100, 149, 237, 0.3);
+    background-color: rgba(100, 149, 237, 0.1);
+}
+
+
+.selected {
+    font-weight: bold;
+}
+
+#timer-container {
+    padding: 12px 18px;
+    margin-top: 15px;
+    background-color: #f8f8f8;
+    display: none;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#timer {
+    font-size: 1.6em;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    color: #000;
+    margin-bottom: 40px;
+    text-align: center;
+}
