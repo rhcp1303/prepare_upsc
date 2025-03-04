@@ -128,6 +128,7 @@ function showResults() {
     resultsContainer.style.display = 'block';
     queryInput.disabled = true;
     startBtn.style.display = 'none';
+    homeButtonFrame.style.display = 'block'
     let resultsHTML = '';
     let score = 0;
     let correctCount = 0;
@@ -203,3 +204,6 @@ function showResults() {
 prevBtn.addEventListener('click', prevQuestion);
 nextBtn.addEventListener('click', nextQuestion);
 submitBtn.addEventListener('click', showResults);
+homeButton.addEventListener('click', () => {
+    window.location.href = "";
+});

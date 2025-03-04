@@ -343,3 +343,47 @@ h1 {
 .scorecard-value {
     text-align: right; /* Align values to the right */
 }
+/* ... your existing CSS ... */
+
+/* ... your existing CSS ... */
+
+.home-button-frame {
+    position: fixed;
+    top: 500px; /* Match scorecard's top */
+    right: 20px; /* Match scorecard's right */
+    width: 200px; /* Match scorecard's width */
+    background: rgba(255, 255, 255, 0.8); /* Match scorecard's background */
+    padding: 25px; /* Match scorecard's padding */
+    border-radius: 12px; /* Match scorecard's border-radius */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Match scorecard's box-shadow */
+    z-index: 100; /* Match scorecard's z-index */
+    display: none; /* Initially hidden */
+    color: black; /* Match scorecard's color */
+    font-family: 'Poppins', sans-serif; /* Match scorecard's font-family */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Match scorecard's transition */
+}
+
+.home-button-frame:hover {
+    transform: translateY(-5px); /* Match scorecard's hover effect */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Match scorecard's hover effect */
+}
+
+#homeButton {
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #667eea;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#homeButton:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #D11A2A, #F08080);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
