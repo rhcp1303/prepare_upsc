@@ -178,7 +178,6 @@ body {
     background-color: rgba(100, 149, 237, 0.1);
 }
 
-
 .selected {
     font-weight: bold;
 }
@@ -219,7 +218,8 @@ h1 {
     font-weight: normal;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
     margin-bottom: 15px; /* Reduced margin */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
+    transform: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .question-number-frame:hover {
@@ -286,4 +286,60 @@ h1 {
     70% { transform: translateX(5px); }
     90% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
+}
+
+/* Scorecard styles */
+.scorecard-frame {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 200px; /* Increased width for better layout */
+    background: rgba(255, 255, 255, 0.8); /* Gradient background */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+    z-index: 100;
+    display: none;
+    color: black; /* White text for contrast */
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.scorecard-frame:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+}
+
+.scorecard-frame h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+}
+
+.scorecard-frame p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle divider */
+    padding-bottom: 8px;
+    display: flex; /* Use flexbox to align labels and values */
+    justify-content: space-between; /* Distribute space evenly */
+}
+
+.scorecard-frame p:last-child {
+    border-bottom: none; /* Remove border from the last paragraph */
+}
+
+.scorecard-label {
+    width: 80px; /* Fixed width for labels */
+    text-align: left; /* Align labels to the left */
+    flex-shrink: 0; /* Prevent labels from shrinking */
+}
+
+.scorecard-value {
+    text-align: right; /* Align values to the right */
 }

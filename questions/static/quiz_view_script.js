@@ -5,6 +5,8 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const submitBtn = document.getElementById('submitBtn');
 const resultsContainer = document.getElementById('resultsContainer');
+const scorecardFrame = document.getElementById('scorecardFrame');
+const scorecardContent = document.getElementById('scorecardContent');
 
 let questions = [];
 let userAnswers = {};
@@ -50,6 +52,7 @@ function startQuiz() {
     submitBtn.style.display = 'inline-block';
     currentQuestionIndex = 0;
     userAnswers = {};
+    scorecardFrame.style.display = 'none'; // Hide scorecard initially
     displayQuestion();
 }
 
@@ -123,8 +126,9 @@ function showResults() {
     nextBtn.style.display = 'none';
     submitBtn.style.display = 'none';
     resultsContainer.style.display = 'block';
-
-    let resultsHTML = '<h3>Quiz Results</h3>';
+    queryInput.disabled = true;
+    startBtn.style.display = 'none';
+    let resultsHTML = '';
     let score = 0;
     let correctCount = 0;
     let incorrectCount = 0;
@@ -176,6 +180,16 @@ function showResults() {
             attemptedCount++;
         }
     });
+
+    // Display scorecard after explanations are generated
+    scorecardContent.innerHTML = `
+        <p><span class="scorecard-label">Score:</span><span class="scorecard-value">${score.toFixed(2)}</span></p>
+        <p><span class="scorecard-label">Correct:</span><span class="scorecard-value">${correctCount}</span></p>
+        <p><span class="scorecard-label">Incorrect:</span><span class="scorecard-value">${incorrectCount}</span></p>
+        <p><span class="scorecard-label">Attempted:</span><span classcard-value">${attemptedCount}</span></p>
+        <p><span class="scorecard-label">Total:</span><span class="scorecard-value">${questions.length}</span></p>
+    `;
+    scorecardFrame.style.display = 'block';
 
     resultsHTML += `<p>Score: ${score.toFixed(2)}</p>`;
     resultsHTML += `<p>Correct Answers: ${correctCount}</p>`;
