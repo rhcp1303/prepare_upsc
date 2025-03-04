@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Previous Year Questions (PYQ) Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'quiz_view_style.css' %}">
+    <link rel="stylesheet" href="{% static 'pyq_view_style.css' %}">
 </head>
 <body>
     <div id="modal" class="modal">
@@ -15,7 +15,7 @@
             <p id="modalMessage"></p>
         </div>
     </div>
-    <div class="header">
+    <div class="header" id="pageHeader">
         <img src="{% static 'images/business.png' %}" alt="Your Logo" class="logo">
         <div class="tagline-container">
             <p class="tagline">IAS Bhai - Your AI powered guide. Cut the Clutter, Conquer the Exam!</p>
@@ -25,7 +25,7 @@
     <h1>Previous Year Questions (PYQ) Test</h1>
 
     <div class="container">
-        <label for="yearSelect">Select Year:</label>
+        <label for="yearSelect"></label>
         <select id="yearSelect">
             </select>
         <button id="startPYQTestBtn">Start Test</button>

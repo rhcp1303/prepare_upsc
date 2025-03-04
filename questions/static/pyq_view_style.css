@@ -1,0 +1,465 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.tagline-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.tagline {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #333;
+    animation: marquee 10s linear infinite;
+    padding-left: 100%;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#queryInput {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#queryInput:focus {
+    border-color: #a0c4ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(160, 196, 255, 0.5);
+}
+
+#startBtn, #prevBtn, #nextBtn, #submitBtn {
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #667eea;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#startBtn:hover, #prevBtn:hover, #nextBtn:hover, #submitBtn:hover {
+    transform: scale(1.05);
+    background-color: #E14D55;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+#prevBtn, #nextBtn, #submitBtn {
+    display: none;
+}
+
+#submitBtn{
+    margin-left: 490px;
+}
+
+#questionContainer h3 {
+    margin-top: 20px;
+    font-weight: normal;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px 24px;
+    margin-bottom: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.option-btn:hover {
+    border-color: #b0bec5;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+.option-btn.selected {
+    border-color: #64b5f6;
+    box-shadow: 0 5px 10px rgba(100, 149, 237, 0.3);
+    background-color: rgba(100, 149, 237, 0.1);
+}
+
+.option-number-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 16px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    color: #555;
+    font-weight: 600;
+}
+
+.option-btn.selected .option-number-container {
+    background-color: #64b5f6;
+    color: #fff;
+}
+
+#resultsContainer {
+    margin-top: 20px;
+    display: none;
+}
+
+.option-btn.correct {
+    background-color: rgba(102, 187, 106, 0.3);
+    color: #000;
+}
+
+.option-btn.incorrect {
+    background-color: #ffcccc; /* Light red background */
+    color: #000; /* Black text */
+}
+
+.option-btn.selected.incorrect { /* Add this rule */
+    background-color: rgba(255, 0, 0, 0.5); /* Strong red background */
+    color: #000;
+}
+
+.option-btn.selected {
+    border-color: #64b5f6;
+    box-shadow: 0 5px 10px rgba(100, 149, 237, 0.3);
+    background-color: rgba(100, 149, 237, 0.1);
+}
+
+.selected {
+    font-weight: bold;
+}
+
+#timer-container {
+    padding: 12px 18px;
+    position: center;
+    background: linear-gradient(to right, #64b5f6, #42a5f5);
+    display: none;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#timer {
+    font-size: 1.6em;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    color: #000;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.question-number-frame {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    padding: 5px 12px; /* Reduced padding */
+    border-radius: 10px; /* Reduced border radius */
+    font-size: 1.2em; /* Reduced font size */
+    font-weight: normal;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
+    margin-bottom: 15px; /* Reduced margin */
+    transition: border-color 0.3s ease;
+    transform: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.question-number-frame:hover {
+    transform: translateY(-3px); /* Reduced lift on hover */
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3); /* Reduced stronger shadow on hover */
+}
+.explanation {
+    color: #333; /* Or any of the colors mentioned above */
+    font-size: 16px; /* Adjust font size as needed */
+    line-height: 1.6; /* Adjust line height for better readability */
+    margin-top: 10px; /* Add some space above the explanation */
+    background-color: #f9f9f9; /* give the explanation a slightly different background */
+    padding: 10px; /* add some padding */
+    border-radius: 5px; /* add rounded corners */
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#queryInput.shake {
+    animation: shake 0.5s;
+    animation-iteration-count: 1;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-5px); }
+    30% { transform: translateX(5px); }
+    50% { transform: translateX(-5px); }
+    70% { transform: translateX(5px); }
+    90% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Scorecard styles */
+.scorecard-frame {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 200px; /* Increased width for better layout */
+    background: rgba(255, 255, 255, 0.8); /* Gradient background */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+    z-index: 100;
+    display: none;
+    color: black; /* White text for contrast */
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.scorecard-frame:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+}
+
+.scorecard-frame h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+}
+
+.scorecard-frame p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle divider */
+    padding-bottom: 8px;
+    display: flex; /* Use flexbox to align labels and values */
+    justify-content: space-between; /* Distribute space evenly */
+}
+
+.scorecard-frame p:last-child {
+    border-bottom: none; /* Remove border from the last paragraph */
+}
+
+.scorecard-label {
+    width: 80px; /* Fixed width for labels */
+    text-align: left; /* Align labels to the left */
+    flex-shrink: 0; /* Prevent labels from shrinking */
+}
+
+.scorecard-value {
+    text-align: right; /* Align values to the right */
+}
+/* ... your existing CSS ... */
+
+/* ... your existing CSS ... */
+
+.home-button-frame {
+    position: fixed;
+    top: 500px; /* Match scorecard's top */
+    right: 20px; /* Match scorecard's right */
+    width: 200px; /* Match scorecard's width */
+    background: rgba(255, 255, 255, 0.8); /* Match scorecard's background */
+    padding: 25px; /* Match scorecard's padding */
+    border-radius: 12px; /* Match scorecard's border-radius */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Match scorecard's box-shadow */
+    z-index: 100; /* Match scorecard's z-index */
+    display: none; /* Initially hidden */
+    color: black; /* Match scorecard's color */
+    font-family: 'Poppins', sans-serif; /* Match scorecard's font-family */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Match scorecard's transition */
+}
+
+.home-button-frame:hover {
+    transform: translateY(-5px); /* Match scorecard's hover effect */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Match scorecard's hover effect */
+}
+
+#homeButton {
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #667eea;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#homeButton:hover {
+    transform: scale(1.05);
+    background-color: #E14D55;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+#startPYQTestBtn {
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin: 0 auto;
+    margin-top: -50px;
+    margin-right: 0px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #667eea;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#startPYQTestBtn:hover {
+    transform: scale(1.05);
+    background-color: #E14D55;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+#yearSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 20px; /* Increased font size */
+    padding: 10px 20px; /* Increased padding */
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    background-color: #667eea;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Black arrow */
+    background-repeat: no-repeat;
+    background-position: right 20px center; /* Adjusted arrow position */
+    padding-right: 60px; /* Increased padding for arrow space */
+    outline: none; /* Remove default outline */
+    line-height: 1.5; /* Improved line height */
+}
+
+#yearSelect:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+    background-color: #E14D55;
+
+}
+
+#yearSelect:focus {
+    box-shadow: 0 0 0 4px rgba(102, 134, 234, 0.5); /* Refined focus shadow */
+}
+
+.year-selection-container {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    gap: 15px; /* Add some space between elements */
+    margin-bottom: 20px; /* add some margin to the bottom */
+}
+
+.button-container {
+    width: 100%; /* Make the container span the full width */
+    text-align: center; /* Center the buttons horizontally */
+    margin-top: 20px; /* Add some space above the buttons */
+}
+
+.button-container button {
+    margin: 0 10px; /* Add spacing between buttons */
+}
+
+#submitBtn{
+    margin-left: 0px; /* remove previous margin from submit button */
+}
