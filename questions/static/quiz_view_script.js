@@ -191,13 +191,6 @@ function showResults() {
         <p><span class="scorecard-label">Total:</span><span class="scorecard-value">${questions.length}</span></p>
     `;
     scorecardFrame.style.display = 'block';
-
-    resultsHTML += `<p>Score: ${score.toFixed(2)}</p>`;
-    resultsHTML += `<p>Correct Answers: ${correctCount}</p>`;
-    resultsHTML += `<p>Incorrect Answers: ${incorrectCount}</p>`;
-    resultsHTML += `<p>Attempted Answers: ${attemptedCount}</p>`;
-    resultsHTML += `<p>Total Questions: ${questions.length}</p>`;
-
     resultsContainer.innerHTML = resultsHTML;
 }
 

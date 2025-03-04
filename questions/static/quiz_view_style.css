@@ -87,7 +87,7 @@ body {
 
 #startBtn:hover, #prevBtn:hover, #nextBtn:hover, #submitBtn:hover {
     transform: scale(1.05);
-    background: linear-gradient(to right, #D11A2A, #F08080);
+    background-color: #E14D55;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
@@ -384,6 +384,6 @@ h1 {
 
 #homeButton:hover {
     transform: scale(1.05);
-    background: linear-gradient(to right, #D11A2A, #F08080);
+    background-color: #E14D55;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
