@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import MockMCQ
-from .serializers import MockMCQSerializer
+from .models import MockMCQ, PYQuestions
+from .serializers import MockMCQSerializer, PYQSerializer
 from django.shortcuts import render
 from . import services
 from .helpers import query_question_helper as helper
@@ -18,7 +18,15 @@ def get_subjectwise_mock_mcq(request):
     else:
         questions = MockMCQ.objects.order_by('?')[:num_questions]
     serializer = MockMCQSerializer(questions, many=True)
-    return Response({"questions": serializer.data}, status=200)
+    return Response(serializer.data, status=200)
+
+
+@api_view(['GET'])
+def get_yearwise_pyq(request):
+    year = request.GET.get('year', None)
+    questions = PYQuestions.objects.filter(year=year).order_by('q_num')
+    serializer = PYQSerializer(questions, many=True)
+    return Response(serializer.data, status=200)
 
 
 @api_view(['GET'])
@@ -37,7 +45,7 @@ def get_comprehensive_mock_mcq(request):
     subject_quotas = request.GET.get('subject_quotas', subject_quotas)
     questions = services.get_mock_mcq(subject_quotas)
     serializer = MockMCQSerializer(questions, many=True)
-    return Response({"questions": serializer.data}, status=200)
+    return Response(serializer.data, status=200)
 
 
 def mock_test_view(request):
@@ -68,8 +76,14 @@ def demo_view(request):
 def demo2_view(request):
     return render(request, 'demo2.html')
 
+
 def demo3_view(request):
     return render(request, 'quiz_view.html')
+
+
+def demo4_view(request):
+    return render(request, 'pyq_view.html')
+
 
 @api_view(['GET'])
 def get_quiz_questions(request):
