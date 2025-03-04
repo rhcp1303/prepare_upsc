@@ -22,16 +22,24 @@ async function fetchQuestions(query) {
 }
 
 startBtn.addEventListener('click', async () => {
-    const query = queryInput.value;
+    const query = queryInput.value.trim();
+
     if (query) {
         questions = await fetchQuestions(query);
         if (questions.length > 0) {
             startQuiz();
         } else {
-            alert("No questions found.");
+            queryInput.classList.add('shake');
+            setTimeout(() => {
+                queryInput.classList.remove('shake');
+            }, 500);
+            alert("No questions found for the given query.");
         }
     } else {
-        alert("Please enter a query.");
+        queryInput.classList.add('shake');
+        setTimeout(() => {
+            queryInput.classList.remove('shake');
+        }, 500);
     }
 });
 
@@ -50,16 +58,13 @@ function displayQuestion() {
     const question = questions[currentQuestionIndex];
     if (!question) return;
 
-    // Create a frame for the question number
     const questionNumberFrame = document.createElement('div');
-    questionNumberFrame.className = 'question-number-frame'; // Add a class for styling
+    questionNumberFrame.className = 'question-number-frame';
     questionNumberFrame.textContent = `Q. ${currentQuestionIndex + 1} )`;
     questionContainer.appendChild(questionNumberFrame);
 
-
-    // Create a separate element for the question text
     const questionTextElement = document.createElement('h3');
-    questionTextElement.innerHTML = question.question_text.replace('**','').replace(/\n/g, '<br><br>');
+    questionTextElement.innerHTML = question.question_text.replace('**', '').replace(/\n/g, '<br><br>');
     questionContainer.appendChild(questionTextElement);
 
     const options = ['a', 'b', 'c', 'd'];
@@ -133,30 +138,29 @@ function showResults() {
         resultsHTML += `
             <div class="question-result">
                 <div class="question-number-frame">Q. ${index + 1} )</div>
-                <p>${question.question_text.replace('**','').replace(/\n/g, '<br><br>')}</p>
+                <p>${question.question_text.replace('**', '').replace(/\n/g, '<br><br>')}</p>
         `;
 
         const options = ['a', 'b', 'c', 'd'];
         options.forEach(option => {
             const optionText = question[`option_${option}`];
-            let className = 'option-btn'; // Start with the base class
+            let className = 'option-btn';
 
             if (option === correctAnswer) className += ' correct';
             if (option === userAnswer && option !== correctAnswer) className += ' incorrect';
             if (option === userAnswer) className += ' selected';
 
-            // Create button element
             const optionBtn = document.createElement('button');
             optionBtn.className = className.trim();
             optionBtn.textContent = optionText;
-            optionBtn.disabled = true; // Disable buttons
+            optionBtn.disabled = true;
 
             const optionNumberContainer = document.createElement('div');
             optionNumberContainer.className = 'option-number-container';
             optionNumberContainer.textContent = option.toUpperCase();
             optionBtn.prepend(optionNumberContainer);
 
-            resultsHTML += optionBtn.outerHTML; // Append the button's HTML to the results
+            resultsHTML += optionBtn.outerHTML;
         });
 
         resultsHTML += `
