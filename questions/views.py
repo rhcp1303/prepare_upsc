@@ -87,6 +87,6 @@ def get_quiz_questions(request):
     num_questions = 100
     try:
         questions = helper.query_question(query, num_questions)
-        return Response(questions, status=200)  # Return questions as JSON
+        return Response(questions, status=200)
     except Exception as e:
         return Response({'error': str(e)}, status=500)
