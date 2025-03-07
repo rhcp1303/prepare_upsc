@@ -8,7 +8,7 @@ from .helpers import query_question_helper as helper
 
 
 @api_view(['GET'])
-def get_subjectwise_mock_mcq(request):
+def get_subject_wise_mock_mcq(request):
     subject = request.GET.get('subject', None)
     num_questions = int(request.GET.get('num_questions', 20))
     if num_questions <= 0:
@@ -22,7 +22,7 @@ def get_subjectwise_mock_mcq(request):
 
 
 @api_view(['GET'])
-def get_yearwise_pyq(request):
+def get_year_wise_pyq(request):
     year = request.GET.get('year', None)
     questions = PYQuestions.objects.filter(year=year).order_by('q_num')
     serializer = PYQSerializer(questions, many=True)
@@ -48,10 +48,6 @@ def get_comprehensive_mock_mcq(request):
     return Response(serializer.data, status=200)
 
 
-def mock_test_view(request):
-    return render(request, 'index.html')
-
-
 @api_view(['POST'])
 def evaluate_test(request):
     data = request.data
@@ -69,26 +65,26 @@ def evaluate_test(request):
     return Response({'score': score, 'explanations': explanations})
 
 
-def demo_view(request):
-    return render(request, 'demo.html')
+def subject_wise_mock_test_view(request):
+    return render(request, 'subject_wise_mock_test.html')
 
 
 def demo2_view(request):
     return render(request, 'demo2.html')
 
 
-def demo3_view(request):
+def quiz_view(request):
     return render(request, 'quiz_view.html')
 
 
-def demo4_view(request):
+def pyq_view(request):
     return render(request, 'pyq_view.html')
 
 
 @api_view(['GET'])
 def get_quiz_questions(request):
     query = request.GET.get('query')
-    num_questions = 5
+    num_questions = 100
     try:
         questions = helper.query_question(query, num_questions)
         return Response(questions, status=200)  # Return questions as JSON
