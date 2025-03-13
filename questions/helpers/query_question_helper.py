@@ -1,12 +1,12 @@
 import json
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores.faiss import FAISS
-import random
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
 embeddings_store_path = "questions/data/faiss_folders/question.faiss"
 vectorstore = FAISS.load_local(embeddings_store_path, embeddings=embeddings,
                                allow_dangerous_deserialization=True)
+
 
 def query_question(user_topic_query, num_questions):
     retriever = vectorstore.as_retriever(search_kwargs={"k": num_questions})
@@ -16,7 +16,6 @@ def query_question(user_topic_query, num_questions):
         item = json.loads(doc.page_content)
         retrieved_mcqs.append(item)
         options = ['a', 'b', 'c', 'd']
-        random.shuffle(options)
         option_mapping = {}
         for option in options:
             if option == 'a':
