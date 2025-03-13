@@ -52,7 +52,7 @@ function startQuiz() {
     submitBtn.style.display = 'inline-block';
     currentQuestionIndex = 0;
     userAnswers = {};
-    scorecardFrame.style.display = 'none'; // Hide scorecard initially
+    scorecardFrame.style.display = 'none';
     displayQuestion();
 }
 
@@ -182,7 +182,6 @@ function showResults() {
         }
     });
 
-    // Display scorecard after explanations are generated
     scorecardContent.innerHTML = `
         <p><span class="scorecard-label">Score:</span><span class="scorecard-value">${score.toFixed(2)}</span></p>
         <p><span class="scorecard-label">Correct:</span><span class="scorecard-value">${correctCount}</span></p>
