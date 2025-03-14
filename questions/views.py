@@ -5,6 +5,7 @@ from .serializers import MockMCQSerializer, PYQSerializer
 from django.shortcuts import render
 from . import services
 from .helpers import query_question_helper as helper
+import json
 
 
 @api_view(['GET'])
@@ -27,6 +28,13 @@ def get_year_wise_pyq(request):
     questions = PYQuestions.objects.filter(year=year).order_by('q_num')
     serializer = PYQSerializer(questions, many=True)
     return Response(serializer.data, status=200)
+
+
+@api_view(['GET'])
+def test1(request):
+    with open('questions/data/flt/test1.json', 'r') as f:
+        data = json.load(f)
+    return Response(data, status=200)
 
 
 @api_view(['GET'])
@@ -79,6 +87,10 @@ def quiz_view(request):
 
 def pyq_view(request):
     return render(request, 'pyq_view.html')
+
+
+def test1_view(request):
+    return render(request, 'test1_view.html')
 
 
 @api_view(['GET'])

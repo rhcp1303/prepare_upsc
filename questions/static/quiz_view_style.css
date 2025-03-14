@@ -102,6 +102,7 @@ body {
 #questionContainer h3 {
     margin-top: 20px;
     font-weight: normal;
+    white-space: pre-wrap;
 }
 
 .option-btn {
@@ -163,12 +164,12 @@ body {
 }
 
 .option-btn.incorrect {
-    background-color: #ffcccc; /* Light red background */
-    color: #000; /* Black text */
+    background-color: #ffcccc;
+    color: #000;
 }
 
-.option-btn.selected.incorrect { /* Add this rule */
-    background-color: rgba(255, 0, 0, 0.5); /* Strong red background */
+.option-btn.selected.incorrect {
+    background-color: rgba(255, 0, 0, 0.5);
     color: #000;
 }
 
@@ -212,32 +213,32 @@ h1 {
     justify-content: center;
     background-color: white;
     color: black;
-    padding: 5px 12px; /* Reduced padding */
-    border-radius: 10px; /* Reduced border radius */
-    font-size: 1.2em; /* Reduced font size */
+    padding: 5px 12px;
+    border-radius: 10px;
+    font-size: 1.2em;
     font-weight: normal;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
-    margin-bottom: 15px; /* Reduced margin */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
     transition: border-color 0.3s ease;
     transform: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .question-number-frame:hover {
-    transform: translateY(-3px); /* Reduced lift on hover */
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3); /* Reduced stronger shadow on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
 }
 .explanation {
-    color: #333; /* Or any of the colors mentioned above */
-    font-size: 16px; /* Adjust font size as needed */
-    line-height: 1.6; /* Adjust line height for better readability */
-    margin-top: 10px; /* Add some space above the explanation */
-    background-color: #f9f9f9; /* give the explanation a slightly different background */
-    padding: 10px; /* add some padding */
-    border-radius: 5px; /* add rounded corners */
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .modal {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -245,7 +246,7 @@ h1 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
@@ -288,26 +289,25 @@ h1 {
     100% { transform: translateX(0); }
 }
 
-/* Scorecard styles */
 .scorecard-frame {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 200px; /* Increased width for better layout */
-    background: rgba(255, 255, 255, 0.8); /* Gradient background */
+    width: 200px;
+    background: rgba(255, 255, 255, 0.8);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     z-index: 100;
     display: none;
-    color: black; /* White text for contrast */
+    color: black;
     font-family: 'Poppins', sans-serif;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .scorecard-frame:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
 }
 
 .scorecard-frame h3 {
@@ -316,7 +316,7 @@ h1 {
     text-align: center;
     font-size: 1.8em;
     font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .scorecard-frame p {
@@ -324,48 +324,45 @@ h1 {
     font-size: 1.1em;
     font-weight: 500;
     line-height: 1.5;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle divider */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding-bottom: 8px;
-    display: flex; /* Use flexbox to align labels and values */
-    justify-content: space-between; /* Distribute space evenly */
+    display: flex;
+    justify-content: space-between;
 }
 
 .scorecard-frame p:last-child {
-    border-bottom: none; /* Remove border from the last paragraph */
+    border-bottom: none;
 }
 
 .scorecard-label {
-    width: 80px; /* Fixed width for labels */
-    text-align: left; /* Align labels to the left */
-    flex-shrink: 0; /* Prevent labels from shrinking */
+    width: 80px;
+    text-align: left;
+    flex-shrink: 0;
 }
 
 .scorecard-value {
-    text-align: right; /* Align values to the right */
+    text-align: right;
 }
-/* ... your existing CSS ... */
-
-/* ... your existing CSS ... */
 
 .home-button-frame {
     position: fixed;
-    top: 500px; /* Match scorecard's top */
-    right: 20px; /* Match scorecard's right */
-    width: 200px; /* Match scorecard's width */
-    background: rgba(255, 255, 255, 0.8); /* Match scorecard's background */
-    padding: 25px; /* Match scorecard's padding */
-    border-radius: 12px; /* Match scorecard's border-radius */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Match scorecard's box-shadow */
-    z-index: 100; /* Match scorecard's z-index */
-    display: none; /* Initially hidden */
-    color: black; /* Match scorecard's color */
-    font-family: 'Poppins', sans-serif; /* Match scorecard's font-family */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Match scorecard's transition */
+    top: 500px;
+    right: 20px;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    display: none;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .home-button-frame:hover {
-    transform: translateY(-5px); /* Match scorecard's hover effect */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Match scorecard's hover effect */
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
 }
 
 #homeButton {
