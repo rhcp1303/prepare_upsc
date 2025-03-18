@@ -19,7 +19,7 @@ async function fetchQuestions() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const jsonData = await response.json();
-        return jsonData; // Return all questions
+        return jsonData;
 
     } catch (error) {
         console.error("Error fetching questions:", error);
@@ -29,7 +29,7 @@ async function fetchQuestions() {
 
 startBtn.addEventListener('click', async () => {
    questions = await fetchQuestions();
-    if (questions && questions.length > 0) { // Check if questions were loaded successfully
+    if (questions && questions.length > 0) {
         startQuiz();
     } else {
         alert("Failed to load questions. Please check the API or network connection.");
@@ -58,7 +58,7 @@ function displayQuestion() {
     questionContainer.appendChild(questionNumberFrame);
 
     const questionTextElement = document.createElement('h3');
-    questionTextElement.innerHTML = question.question_text.replace('**', '').replace(/\n/g, '<br><br>');
+    questionTextElement.innerHTML = question.question_text;
     questionContainer.appendChild(questionTextElement);
 
     const options = ['a', 'b', 'c', 'd'];
@@ -134,7 +134,7 @@ function showResults() {
         resultsHTML += `
             <div class="question-result">
                 <div class="question-number-frame">Q. ${index + 1} )</div>
-                <p>${question.question_text.replace('**', '').replace(/\n/g, '<br><br>')}</p>
+                <p>${question.question_text}</p>
         `;
 
         const options = ['a', 'b', 'c', 'd'];
