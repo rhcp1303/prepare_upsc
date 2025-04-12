@@ -8,3 +8,4 @@ media/
 *~
 temp/
 /questions/data/faiss_folders/question.faiss/
+/.gradio/
