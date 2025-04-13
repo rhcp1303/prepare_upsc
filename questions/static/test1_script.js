@@ -1,4 +1,3 @@
-const queryInput = document.getElementById('queryInput');
 const startBtn = document.getElementById('startBtn');
 const questionContainer = document.getElementById('questionContainer');
 const prevBtn = document.getElementById('prevBtn');
@@ -7,6 +6,7 @@ const submitBtn = document.getElementById('submitBtn');
 const resultsContainer = document.getElementById('resultsContainer');
 const scorecardFrame = document.getElementById('scorecardFrame');
 const scorecardContent = document.getElementById('scorecardContent');
+const header = document.querySelector('.header');
 
 let questions = [];
 let userAnswers = {};
@@ -38,6 +38,7 @@ startBtn.addEventListener('click', async () => {
 
 function startQuiz() {
     startBtn.style.display = 'none';
+    header.style.display = 'none';
     prevBtn.style.display = 'inline-block';
     nextBtn.style.display = 'inline-block';
     submitBtn.style.display = 'inline-block';
@@ -117,7 +118,6 @@ function showResults() {
     nextBtn.style.display = 'none';
     submitBtn.style.display = 'none';
     resultsContainer.style.display = 'block';
-    queryInput.disabled = true;
     startBtn.style.display = 'none';
     homeButtonFrame.style.display = 'block'
     let resultsHTML = '';

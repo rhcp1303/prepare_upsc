@@ -11,6 +11,5 @@ urlpatterns = [
     path('api/quiz/', views.quiz_view, name='quiz_view'),
     path('api/pyq/', views.pyq_view, name='pyq_view'),
     path('api/test1/', views.test1, name='test1'),
-    path('api/test1_view/', views.test1_view, name='test1_view'),
-    path('api/get_quiz_questions/', views.get_quiz_questions, name='get_quiz_questions'),
+    path('api/test1_view/', views.test1_view, name='test1_view')
 ]
