@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = 'This is a utility management command for formatting flt json for ui presentation'
 
     def handle(self, *args, **options):
-        with open("questions/data/flt/test1.json", "r") as file:
+        with open("questions/data/flt/test2.json", "r") as file:
             json_data = file.read()
         try:
             question_list = json.loads(json_data)

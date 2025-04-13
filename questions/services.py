@@ -18,7 +18,7 @@ def get_mock_mcq(subject_quotas):
                                                    question_content_type=category).order_by('?')[:questions_per_pattern]
                 subject_questions.extend(questions)
             for pattern_type in PatternType:
-                if remainder != 0:
+                if remainder > 0:
                     questions = MockMCQ.objects.filter(subject=subject, pattern_type=pattern_type.value,
                                                        question_content_type=category).order_by('?')[:1]
                     subject_questions.extend(questions)

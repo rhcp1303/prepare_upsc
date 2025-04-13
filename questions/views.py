@@ -42,17 +42,18 @@ def get_comprehensive_mock_mcq(request):
     subject_quotas = {
         "MIH": {"STATIC": 10, "CA": 0},
         "HAC": {"STATIC": 4, "CA": 2},
-        "POL": {"STATIC": 10, "CA": 7},
-        "IRS": {"STATIC": 0, "CA": 4},
-        "ECO": {"STATIC": 6, "CA": 9},
+        "POL": {"STATIC": 10, "CA": 11},
+        "ECO": {"STATIC": 8, "CA": 9},
         "SNT": {"STATIC": 5, "CA": 9},
         "ENV": {"STATIC": 6, "CA": 10},
-        "GEO": {"STATIC": 16, "CA": 0},
-        "SOCI": {"STATIC": 0, "CA": 2}
+        "GEO": {"STATIC": 10, "CA": 6},
     }
     subject_quotas = request.GET.get('subject_quotas', subject_quotas)
     questions = services.get_mock_mcq(subject_quotas)
+
     serializer = MockMCQSerializer(questions, many=True)
+    with open("temp/test2.json", "w") as f:
+        f.write(json.dumps(serializer.data))
     return Response(serializer.data, status=200)
 
 
