@@ -152,7 +152,7 @@ def create_mock_mcq_dict(question_dict, pattern_type, subject, content_type):
     print("number of explanations extracted: " + str(len(explanation_list)))
     for i in range(len(question_list)):
         data.append({
-            "subject": subject,
+            "subject": classifier.classify_question(question_list[i]),
             "content_type": content_type,
             "pattern_type": pattern_type,
             "question_text": question_list[i],
