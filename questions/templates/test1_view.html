@@ -7,6 +7,7 @@
     <title>UPSC Prelims Mock Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'mock_test_view_style.css' %}">
+
 </head>
 <body>
     <div id="modal" class="modal">
@@ -25,10 +26,10 @@
     <div class="container">
         <button id="startBtn">Start Test</button>
         <div id="questionContainer"></div>
-        <div>
+        <div class="fixed-button-container">
             <button id="prevBtn">Prev</button>
             <button id="nextBtn">Next</button>
-            <button id="submitBtn">Submit Test</button>
+            <button id="submitBtn">Submit</button>
         </div>
         <div id="resultsContainer"></div>
     </div>
