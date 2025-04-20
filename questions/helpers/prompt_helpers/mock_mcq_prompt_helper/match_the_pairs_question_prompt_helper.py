@@ -22,7 +22,7 @@ match_the_pairs_prompt = """
     Only 1 form:
 
     1. 	Starting with the words "Consider the following pairs" or "With reference to (topic of the question), consider the following pairs" 
-        followed by 3 to 5 pairs. The final statement should be "Which of the pairs given above is/are correctly matched?" :
+        followed by 3 to 6 pairs. The final statement should be "Which of the pairs given above is/are correctly matched?" :
 
    	    *Example*
 

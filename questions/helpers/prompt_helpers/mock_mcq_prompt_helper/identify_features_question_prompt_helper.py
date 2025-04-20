@@ -22,7 +22,7 @@ identify_features_question_prompt = """
     Only 1 form:
     
     1. 	Starting with the words "Consider the following" or " Consider the following (objects of same categories):" followed 
-        by 3,4,5 or 6 related features/elements. The final statement should be asking a question based on counting or identifying something :
+        by 4,5 or 6 related features/elements. The final statement should be asking a question based on counting or identifying something :
 
    	    *Example*
 

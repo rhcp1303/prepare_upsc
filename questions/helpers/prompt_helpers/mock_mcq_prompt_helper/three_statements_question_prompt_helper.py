@@ -103,10 +103,10 @@ three_statements_question_prompt = """
     
     *   Form 1:
     
-    (a) 1 only
-    (b) 2 only
-    (c) Both 1 and 2
-    (d) Neither 1 nor 2
+    (a) 1 and 2 only
+    (b) 2 and 3 only
+    (c) 1 and 3 only
+    (d) 1, 2 and 3
 
     *   Form 2:
     (a) Only one
